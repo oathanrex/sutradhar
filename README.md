@@ -141,6 +141,8 @@ Two stop signs. Everything else the agent should finish without asking you.
 
 ## Watch it before installing anything
 
+[![the 30 second demo render](docs/demo-poster.png)](docs/demo.mp4)
+
 `docs/demo.mp4` is a real 30-second render of `examples/demo-30s`: same timeline, same brand, same gates.
 It is a shot-sheet preview, not a HyperFrames render, and it says so in the file. Regenerate it with
 `make preview`; the gate run that proves it is in CI.
