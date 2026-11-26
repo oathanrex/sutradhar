@@ -1,5 +1,5 @@
 """Tests for v1.1: the builder, the real words gate, evidence, statistics, pixels, API parsing, CLI surface."""
-import json, pathlib, subprocess, sys, tempfile, unittest
+import json, os, pathlib, subprocess, sys, tempfile, unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -238,7 +238,7 @@ class TestCli(unittest.TestCase):
     """The CLI surface, end to end, in a subprocess. Exit codes are the contract."""
 
     def run_cli(self, *args, cwd=ROOT):
-        env = {"PYTHONPATH": str(ROOT / "tools"), "PATH": "/usr/local/bin:/usr/bin:/bin"}
+        env = {**os.environ, "PYTHONPATH": str(ROOT / "tools")}
         return subprocess.run([sys.executable, "-m", "sutra", *args], cwd=cwd, env=env,
                               capture_output=True, text=True)
 

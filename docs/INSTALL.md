@@ -3,7 +3,7 @@
 ## 1. Core (required, 2 minutes)
 
 ```bash
-git clone https://github.com/<you>/sutradhar && cd sutradhar
+git clone https://github.com/oathanrex/sutradhar && cd sutradhar
 python3 --version      # 3.10 or newer
 make test              # 21 tests should pass
 make doctor            # what is missing, and the fix

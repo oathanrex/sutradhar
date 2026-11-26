@@ -10,7 +10,7 @@
 ## 1. इंस्टॉल (5 मिनट)
 
 ```bash
-git clone https://github.com/<you>/sutradhar && cd sutradhar
+git clone https://github.com/oathanrex/sutradhar && cd sutradhar
 make test          # 57 टेस्ट, इंटरनेट के बिना
 make doctor        # क्या मिसिंग है, और उसका ठीक कमांड
 ```

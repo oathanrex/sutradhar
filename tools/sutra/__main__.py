@@ -38,6 +38,7 @@ def main(argv=None):
     p = sub.add_parser("evidence", help="attach real videos to a pack's numbers")
     p.add_argument("action", nargs="?", default="list"); p.add_argument("--pack"); p.add_argument("--video")
     p.add_argument("--views", type=int); p.add_argument("--median", type=int); p.add_argument("--date")
+    p.add_argument("--strict", action="store_true", help="exit 1 if any pack is unmeasured")
     p.set_defaults(fn=cmd_evidence)
     p = sub.add_parser("analytics", help="retention intake without a CSV export")
     p.add_argument("action", choices=["login", "pull"]); p.add_argument("--client-id")
@@ -154,7 +155,8 @@ def cmd_evidence(a):
             fail("usage: sutra evidence add --pack <id> --video <url> --views N --median N [--date YYYY-MM-DD]")
             return 2
         evidence.add(a.pack, a.video, a.views, a.median, a.date); return 0
-    return 1 if evidence.report() else 0
+    bad = evidence.report()
+    return 1 if (getattr(a, "strict", False) and bad) else 0
 
 def cmd_analytics(a):
     from . import analytics
