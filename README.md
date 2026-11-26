@@ -4,6 +4,14 @@ Edit video in code with any agent — Claude Code, Antigravity, Codex, Gemini CL
 for any creator category, with the numbers checked instead of vibes.</p>
 
 <p align="center">
+  <a href="https://github.com/oathanrex/sutradhar/actions/workflows/ci.yml"><img src="https://github.com/oathanrex/sutradhar/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue.svg" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/Dependencies-0%20(stdlib%20only)-success.svg" alt="Zero Dependencies">
+  <img src="https://img.shields.io/badge/Tests-57%20passing-brightgreen.svg" alt="57 Tests">
+</p>
+
+<p align="center">
   <code>MIT</code> · <code>zero dependencies in the core</code> · <code>57 tests</code> · <code>10 categories × 6 locales × 4 formats = 240</code>
 </p>
 
@@ -37,16 +45,15 @@ sutradhar fixes those four, and nothing else. It is deliberately small: 8 skills
 ## Install
 
 ```bash
-git clone https://github.com/<you>/sutradhar && cd sutradhar
-make test          # 21 tests, no network, no ffmpeg, no GPU
+git clone https://github.com/oathanrex/sutradhar && cd sutradhar
+make test          # 57 tests, no network, no ffmpeg, no GPU
 make doctor        # tells you exactly what is missing on your machine
 ```
 
 Using **Claude Code**: open the folder, it reads `CLAUDE.md`, say `build my brand`.
-Using **Antigravity / Gemini CLI**: `make sync` (mirrors `.claude/skills` → `.agents/skills`), tell it to read
-`AGENTS.md` first.
+Using **Antigravity / Gemini CLI**: `.agents/skills` is already synced (or run `make sync`), tell it to read `AGENTS.md` first.
 
-As a **plugin** (Claude Code): `/plugin marketplace add <you>/sutradhar` then install `sutradhar` from it —
+As a **plugin** (Claude Code): `/plugin marketplace add oathanrex/sutradhar` then install `sutradhar` from it —
 the manifest lives in `.claude-plugin/`. As a **CLI**: `pipx install .` gives you `sutra` on PATH.
 
 The rendering engine is [HyperFrames](https://github.com/heygen-com/hyperframes) (Apache-2.0, free, HTML → MP4,
@@ -72,7 +79,7 @@ renderer**, so a broken HyperFrames release cannot silently ruin your paperwork.
 research ──► plan (pack × locale × format) ──► script ──► timeline.json ──► storyboard ✋ ──► render
                                                               │                              │
                                                               ▼                              ▼
-                                                    spec verify + 5 gates ◄──────────────  gate ✋
+                                                    spec verify + 7 gates ◄──────────────  gate ✋
                                                               │
                                     analytics curve ──► sutra loop ──► rules locked or deleted ──┐
                                                               ▲                                    │
