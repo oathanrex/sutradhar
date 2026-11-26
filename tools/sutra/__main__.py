@@ -25,12 +25,24 @@ def main(argv=None):
     p = sub.add_parser("spec", help="extract or verify the style spec"); p.add_argument("action", choices=["extract", "verify"])
     p.add_argument("timeline", nargs="?"); p.add_argument("--from", nargs="*", default=[]); p.add_argument("--out"); p.set_defaults(fn=cmd_spec)
     p = sub.add_parser("gate", help="run the five gates"); p.add_argument("gate", nargs="?", default="all")
-    p.add_argument("--timeline", default="plan/timeline.json"); p.add_argument("--render"); add_common(p); p.set_defaults(fn=cmd_gate)
+    p.add_argument("--timeline", default="plan/timeline.json"); p.add_argument("--render")
+    p.add_argument("--words", default=None, help="audio/words_tight.json for the words gate")
+    add_common(p); p.set_defaults(fn=cmd_gate)
     p = sub.add_parser("loop", help="retention curve -> shot kind -> rule proposals")
     p.add_argument("curve"); p.add_argument("--timeline", default="plan/timeline.json"); p.add_argument("--out", default="analytics/loop_report.md")
     p.set_defaults(fn=cmd_loop)
     p = sub.add_parser("library", help="index media with licences"); p.add_argument("action", nargs="?", default="index")
     p.add_argument("--root", default="."); p.set_defaults(fn=cmd_library)
+    p = sub.add_parser("build", help="timeline.json -> shot-sheet player + HyperFrames composition + receipt")
+    p.add_argument("timeline"); p.add_argument("--out", default="renders/project"); add_common(p); p.set_defaults(fn=cmd_build)
+    p = sub.add_parser("evidence", help="attach real videos to a pack's numbers")
+    p.add_argument("action", nargs="?", default="list"); p.add_argument("--pack"); p.add_argument("--video")
+    p.add_argument("--views", type=int); p.add_argument("--median", type=int); p.add_argument("--date")
+    p.set_defaults(fn=cmd_evidence)
+    p = sub.add_parser("analytics", help="retention intake without a CSV export")
+    p.add_argument("action", choices=["login", "pull"]); p.add_argument("--client-id")
+    p.add_argument("--video"); p.add_argument("--duration", type=float); p.add_argument("--out")
+    p.add_argument("--from-json"); p.add_argument("--dry-run", action="store_true"); p.set_defaults(fn=cmd_analytics)
     p = sub.add_parser("stats", help="measured numbers for a timeline"); p.add_argument("--timeline", default="plan/timeline.json")
     p.set_defaults(fn=cmd_stats)
 
@@ -103,7 +115,8 @@ def cmd_gate(a):
     R = _R(a); tl = jload(a.timeline)
     if not tl: fail(f"{a.timeline} not found"); return 2
     spec = jload(ROOT / "brand" / "style.spec.json")
-    out = gates.run_all(tl, R, spec=spec, render=a.render, root=ROOT)
+    out = gates.run_all(tl, R, spec=spec, render=a.render, root=ROOT, words_json=a.words,
+                        lang=R["locale"]["whisper_lang"])
     table([(n, r["status"], r["detail"]) for n, r in out], ["gate", "state", "detail"], [8, 6, 72])
     bad = 0
     for n, r in out:
@@ -124,6 +137,49 @@ def cmd_library(a):
     added, total, unlic = index(a.root)
     ok(f"{added} new asset(s), {total} total")
     for u in unlic[:20]: warn(f"no licence: {u}  -> add a row to library/licenses.csv")
+    return 0
+
+def cmd_build(a):
+    from .build import build
+    R = _R(a)
+    rec = build(a.timeline, a.out, R, brand_root=ROOT)
+    print()
+    print(f"  next: open {a.out}/index.html to scrub it, then `npx hyperframes check` before rendering")
+    return 1 if rec["structural_problems"] else 0
+
+def cmd_evidence(a):
+    from . import evidence
+    if a.action == "add":
+        if not (a.pack and a.video and a.views and a.median):
+            fail("usage: sutra evidence add --pack <id> --video <url> --views N --median N [--date YYYY-MM-DD]")
+            return 2
+        evidence.add(a.pack, a.video, a.views, a.median, a.date); return 0
+    return 1 if evidence.report() else 0
+
+def cmd_analytics(a):
+    from . import analytics
+    if a.action == "login":
+        if not a.client_id:
+            fail("pass --client-id <oauth client id> from Google Cloud console (device flow, no redirect URI)")
+            return 2
+        tok = analytics.device_login(a.client_id)
+        pathlib.Path("tools/.env").parent.mkdir(parents=True, exist_ok=True)
+        pathlib.Path("tools/.env").write_text(f"SUTRA_TOKEN={tok}\n")
+        ok("token saved to tools/.env (gitignored)"); return 0
+    if a.from_json:
+        rows = analytics.retention_rows(json.loads(pathlib.Path(a.from_json).read_text()), a.duration or 60)
+    elif a.dry_run:
+        print("  GET", analytics.REPORTS, "ids=channel==MINE metrics=audienceWatchRatio,"
+              "relativeRetentionPerformance dimensions=elapsedVideoTimeRatio filters=video==" + str(a.video))
+        return 0
+    else:
+        if not (a.video and a.duration):
+            fail("pass --video <id> and --duration <seconds> (or --from-json <report.json>)"); return 2
+        rows = analytics.pull(a.video, a.duration)
+    out = a.out or f"analytics/{a.video or 'report'}.csv"
+    analytics.write_csv(rows, out)
+    ok(f"{len(rows)} points -> {out}")
+    print(f"  next: sutra loop {out} --timeline <timeline.json>")
     return 0
 
 def cmd_stats(a):

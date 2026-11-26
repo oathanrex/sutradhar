@@ -85,5 +85,8 @@
     "no jump-cut abuse",
     "no text on top of the speaker's mouth"
   ],
-  "gate": {}
+  "gate": {},
+  "evidence": [],
+  "measured": false,
+  "note": "Numbers here are starting defaults chosen from the category's conventions, NOT measurements. Add 3 real videos with `sutra evidence add` before quoting them anywhere."
 }

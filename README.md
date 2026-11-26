@@ -27,7 +27,8 @@ sutradhar fixes those four, and nothing else. It is deliberately small: 8 skills
 | The look | a prompt that says "minimal, dark, punchy" | `brand/design.json` + `brand/style.spec.json` — a render is **verified** against numbers |
 | Categories | one style, tuned for one channel | **10 category packs**, 3 locales, 2 formats — 60 combinations, all tested in CI |
 | Pace | guessed per video | `cuts_per_min`, `avg_shot_len_s`, `max_hold_s` from the pack, checked by `sutra spec verify` |
-| Publish QA | "looks good to me" | **5 hard gates**: hook, pace, mobile legibility, audio LUFS/true peak, licence |
+| Publish QA | "looks good to me" | **7 gates**: hook, pace, mobile legibility, licence, loudness/true peak, word coverage, flash |
+| Output | a promise | `sutra build` -> scrubbable shot sheet + HyperFrames composition + a content-hash receipt |
 | Retention | afterthought | `sutra loop` attributes every drop-off to a **shot kind** and proposes rule changes |
 | Rules | a growing document | dated rules with evidence; **rules that lose evidence get deleted** |
 | Dependencies | npm + python + a magic stack | core is **stdlib only**; ffmpeg/whisper are optional and named when missing |
@@ -52,6 +53,7 @@ renders. Install it from its own source and pin the version in `examples/demo-30
 ## 60 seconds of proof
 
 ```bash
+make preview   # render docs/demo.mp4 and run the render-dependent gates on it
 make check     # brand + 10 packs + spec + demo timeline: all clear
 make spec      # measured numbers vs spec, PASS/FAIL per metric
 make gates     # hook PASS 1.30s · pace PASS · mobile PASS 20 chars 17.4:1 · legal PASS 4 assets · audio SKIP (no render)
@@ -84,8 +86,8 @@ Two human gates per video: **storyboard** before render, **gate review** before 
 | `plan` | "new video about X" | pack × locale × format, beat table, asset list |
 | `research` | a link / "why did this blow up" | evidence table with timestamps + outlier × |
 | `script` | "write the script" | a script that fits the beats and your voice |
-| `edit` | "edit this" | `timeline.json`, storyboard, render, changelog |
-| `gate` | "is it ready" | 5 PASS/FAIL rows with offending timestamps |
+| `edit` | "edit this" | `timeline.json`, storyboard, render, receipt, changelog |
+| `gate` | "is it ready" | 7 PASS/FAIL/SKIP rows with offending timestamps |
 | `loop` | "why do people leave" | drop-off → shot kind → rule proposals |
 | `shorts` | "make shorts" | self-contained 9:16 cuts, re-hooked, re-gated |
 
@@ -124,6 +126,12 @@ brand (once) -> plan -> research -> script -> timeline -> storyboard STOP -> ren
 ```
 
 Two stop signs. Everything else the agent should finish without asking you.
+
+## Watch it before installing anything
+
+`docs/demo.mp4` is a real 30-second render of `examples/demo-30s`: same timeline, same brand, same gates.
+It is a shot-sheet preview, not a HyperFrames render, and it says so in the file. Regenerate it with
+`make preview`; the gate run that proves it is in CI.
 
 ## Honest limits
 

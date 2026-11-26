@@ -82,8 +82,11 @@ class TestGates(unittest.TestCase):
         self.R = resolve("tutorial", "en", "long-16x9"); self.tl = load("plan/timeline.json")
         self.spec = json.loads((pathlib.Path(__file__).resolve().parents[1] / "brand" / "style.spec.json").read_text())
     def test_all_gates_pass_on_demo(self):
+        needs_a_render = {"audio", "words", "flash"}
         for name, r in gates.run_all(self.tl, self.R, spec=self.spec, root=FIX):
-            if name == "audio": self.assertEqual(r["status"], "SKIP"); continue
+            if name in needs_a_render:
+                self.assertEqual(r["status"], "SKIP", f"{name}: a gate must never invent a PASS")
+                continue
             self.assertEqual(r["status"], "PASS", f"{name}: {r}")
     def test_late_first_cut_fails_hook(self):
         tl = dict(self.tl); tl["shots"] = [dict(s) for s in tl["shots"]]
@@ -103,12 +106,14 @@ class TestGates(unittest.TestCase):
 class TestRetentionLoop(unittest.TestCase):
     def test_expensive_kind_gets_proposal(self):
         tmp = pathlib.Path(tempfile.mkdtemp())
-        tl = {"version": "1.0", "video": "t", "format": "long-16x9", "duration_s": 20.0, "shots": [
+        tl = {"version": "1.0", "video": "t", "format": "long-16x9", "duration_s": 30.0, "shots": [
             {"start_s": 0, "end_s": 5, "kind": "screen"}, {"start_s": 5, "end_s": 10, "kind": "chips"},
-            {"start_s": 10, "end_s": 15, "kind": "screen"}, {"start_s": 15, "end_s": 20, "kind": "chips"}]}
+            {"start_s": 10, "end_s": 15, "kind": "screen"}, {"start_s": 15, "end_s": 20, "kind": "chips"},
+            {"start_s": 20, "end_s": 25, "kind": "screen"}, {"start_s": 25, "end_s": 30, "kind": "chips"}]}
         (tmp / "tl.json").write_text(json.dumps(tl))
         vals = {0: 100, 1: 100, 2: 100, 3: 100, 4: 100, 5: 100, 6: 96, 7: 92, 8: 88, 9: 84, 10: 80,
-                11: 80, 12: 80, 13: 80, 14: 80, 15: 80, 16: 72, 17: 68, 18: 64, 19: 60, 20: 55}
+                11: 80, 12: 80, 13: 80, 14: 80, 15: 80, 16: 72, 17: 68, 18: 64, 19: 60, 20: 55,
+                21: 55, 22: 55, 23: 55, 24: 55, 25: 55, 26: 48, 27: 45, 28: 42, 29: 39, 30: 36}
         (tmp / "curve.csv").write_text("t_s,retention\n" + "\n".join(f"{k},{v}" for k, v in vals.items()))
         rows, props, md = correlate(tmp / "curve.csv", tmp / "tl.json", tmp / "r.md")
         self.assertTrue((tmp / "r.md").exists())

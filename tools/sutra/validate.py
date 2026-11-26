@@ -48,6 +48,21 @@ def pack(p):
     e = []
     _req(p, ["id", "name", "spec_patch", "structure", "shot_mix", "gate"], "pack", e)
     if e: return e
+    ev = p.get("evidence")
+    if not isinstance(ev, list):
+        e.append(f"pack {p['id']}: missing 'evidence' list (it may be empty, but it must exist)")
+    else:
+        for i, x in enumerate(ev):
+            for k in ("video", "views", "channel_median", "outlier_x", "measured_on"):
+                if k not in x or x[k] in (None, ""):
+                    e.append(f"pack {p['id']} evidence[{i}]: missing '{k}'")
+            if isinstance(x.get("views"), (int, float)) and isinstance(x.get("channel_median"), (int, float)) \
+               and x["channel_median"]:
+                calc = round(x["views"] / x["channel_median"], 2)
+                if abs(calc - float(x.get("outlier_x", calc))) > 0.02:
+                    e.append(f"pack {p['id']} evidence[{i}]: outlier_x should be {calc}, got {x.get('outlier_x')}")
+        if bool(ev) != bool(p.get("measured")):
+            e.append(f"pack {p['id']}: 'measured' must be true exactly when evidence has rows")
     bad = K.check(p["shot_mix"].keys())
     if bad: e.append(f"pack {p['id']}: unknown shot kinds {bad}")
     tot = sum(p["shot_mix"].values())

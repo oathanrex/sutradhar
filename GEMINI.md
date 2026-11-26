@@ -43,10 +43,14 @@ sutra resolve --pack X --locale hi --format portrait-9x16    # merged config + w
 sutra init <name> --pack X                                   # scaffold videos/<name>/plan/
 sutra check --timeline <file>                                # validate brand, packs, spec, timeline
 sutra spec verify <timeline>                                 # the numbers vs the spec
-sutra gate --timeline <file> --render <mp4>                  # the five publish gates
+sutra build <timeline> --out <dir>                           # shot-sheet player + composition + receipt
+sutra gate --timeline <file> --render <mp4>                  # the seven publish gates
+sutra evidence                                               # which packs have real videos behind their numbers
+sutra analytics pull --video <id> --duration <s>             # retention without a CSV export
 sutra loop <curve.csv> --timeline <file>                     # retention curve -> rule proposals
 sutra library index                                          # no licence, no entry
-make test                                                    # 21 tests, no network, no GPU
+make test                                                    # 55 tests, no network, no GPU
+make preview                                                 # render docs/demo.mp4 and gate it
 ```
 
 ## Definition of done for any video

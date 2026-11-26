@@ -96,5 +96,8 @@
   ],
   "gate": {
     "require_price_or_free_on_screen": true
-  }
+  },
+  "evidence": [],
+  "measured": false,
+  "note": "Numbers here are starting defaults chosen from the category's conventions, NOT measurements. Add 3 real videos with `sutra evidence add` before quoting them anywhere."
 }

@@ -1,7 +1,7 @@
 """Five hard gates. PASS / FAIL / SKIP with the exact offending timestamp. No gate is skippable by choice."""
 import json, pathlib, re, shutil, subprocess
 from . import kinds as K
-from .util import jload, contrast
+from .util import jload, contrast, ffmpeg_exe
 
 def _res(status, detail, offenders=None): return {"status": status, "detail": detail, "offenders": offenders or []}
 
@@ -73,9 +73,11 @@ def audio(render, R):
     render = pathlib.Path(render) if render else None
     if not render or not render.exists():
         return _res("SKIP", "no render yet")
-    if not shutil.which("ffmpeg"):
-        return _res("SKIP", "ffmpeg not installed (winget install Gyan.FFmpeg / brew install ffmpeg)")
-    p = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(render), "-af", "ebur128=peak=true", "-f", "null", "-"],
+    ff = ffmpeg_exe()
+    if not ff:
+        return _res("SKIP", "ffmpeg not installed (winget install Gyan.FFmpeg / brew install ffmpeg, "
+                            "or: pip install imageio-ffmpeg)")
+    p = subprocess.run([ff, "-hide_banner", "-i", str(render), "-af", "ebur128=peak=true", "-f", "null", "-"],
                        capture_output=True, text=True)
     lufs = [float(x) for x in re.findall(r"I:\s+(-?[\d.]+) LUFS", p.stderr)]
     peak = [float(x) for x in re.findall(r"Peak:\s+(-?[\d.]+) dBFS", p.stderr)]
@@ -86,24 +88,95 @@ def audio(render, R):
     if peak and peak[-1] > tpk: off.append(f"true peak {peak[-1]} dBFS exceeds {tpk} dBFS (will clip on some players)")
     return _res("FAIL" if off else "PASS", f"{lufs[-1]} LUFS, peak {peak[-1] if peak else '?'} dBFS", off)
 
-def words(render, words_json):
-    if not render: return _res("SKIP", "no render yet")
+def _norm(w):
+    import re
+    return re.sub(r"[^a-z0-9\u0900-\u097f]", "", str(w).lower())
+
+
+def words(render, words_json, transcribe=None, lang="en", min_coverage=None):
+    """Re-transcribe the render and diff it against the voice's own word list.
+    Catches the failure nobody hears: a sound effect or a duck that swallowed a word.
+    `transcribe` is injectable so the logic is testable without a 3 GB model."""
+    if not render:
+        return _res("SKIP", "no render yet")
+    if not words_json or not __import__("pathlib").Path(words_json).exists():
+        return _res("SKIP", f"no word timings at {words_json}")
+    want = []
+    for seg in jload(words_json) or []:
+        want += [_norm(w["w"]) for w in seg.get("words", [])]
+    want = [w for w in want if w]
+    if not want:
+        return _res("SKIP", "word timings file is empty")
+    if transcribe is None:
+        try:
+            from faster_whisper import WhisperModel  # noqa: F401
+        except ImportError:
+            return _res("SKIP", "pip install faster-whisper  (then this gate re-transcribes the render and diffs it)")
+        transcribe = _whisper_transcriber(str(render), lang)
     try:
-        from faster_whisper import WhisperModel  # noqa
-    except ImportError:
-        return _res("SKIP", "pip install faster-whisper, then this gate re-transcribes the render and diffs it")
-    import difflib, re, sys
-    model_name = (words_json and "large-v3") or "small.en"
-    return _res("SKIP", f"faster-whisper present: run the words gate from the sutra-gate skill with model {model_name}")
+        got_pairs = transcribe()
+    except Exception as e:                      # a broken model must not look like a pass
+        return _res("SKIP", f"transcription failed: {type(e).__name__}: {e}")
+    got = [_norm(w) for w, _ in got_pairs]
+    got = [w for w in got if w]
+    import difflib
+    sm = difflib.SequenceMatcher(None, want, got, autojunk=False)
+    ratio = sm.ratio()
+    off = []
+    for op, a, b, c, d in sm.get_opcodes():
+        if op in ("delete", "replace") and b > a:
+            t = got_pairs[min(c, len(got_pairs) - 1)][1] if got_pairs else 0.0
+            off.append(f"{int(t // 60)}:{t % 60:05.2f} missing or changed: {' '.join(want[a:b])}")
+    thr = 0.98 if min_coverage is None else min_coverage
+    status = "PASS" if ratio >= thr and not off else "FAIL"
+    return _res(status, f"coverage {ratio * 100:.1f}% (min {thr * 100:.0f}%), "
+                        f"{len(want)} words in the voice, {len(got)} heard", off)
+
+
+def _whisper_transcriber(path, lang):
+    def run():
+        import numpy as np
+        import re, subprocess
+        from faster_whisper import WhisperModel
+        pcm = np.frombuffer(subprocess.run(
+            ["ffmpeg", "-v", "error", "-i", path, "-ac", "1", "-ar", "16000", "-f", "f32le", "-"],
+            capture_output=True, check=True).stdout, np.float32)
+        model = "small.en" if lang == "en" else "large-v3"
+        segs, _ = WhisperModel(model, device="cpu", compute_type="int8").transcribe(
+            pcm, word_timestamps=True, beam_size=5, language=None if lang == "en" else lang)
+        return [(w.word, w.start) for s in segs for w in s.words]
+    return run
+
+
+def flash(render, fps=30, limit=3.0):
+    """Photosensitivity: no more than 3 luminance flashes per second (WCAG 2.3.1 territory)."""
+    from .visual import luminance_series, flash_rate
+    if not render or not __import__("pathlib").Path(render).exists():
+        return _res("SKIP", "no render yet")
+    if not ffmpeg_exe():
+        return _res("SKIP", "ffmpeg not installed (pip install imageio-ffmpeg works too)")
+    try:
+        lums = luminance_series(render, fps)
+    except Exception as e:
+        return _res("SKIP", f"could not sample frames: {e}")
+    rate, at = flash_rate(lums, fps)
+    off = [f"{t:.2f}s flash cluster at {rate:.1f} flashes/sec (limit {limit})"] if rate > limit else []
+    return _res("FAIL" if off else "PASS", f"max {rate:.1f} flashes/sec", off)
+
 
 ALL = [("hook", lambda tl, R, **k: hook(tl, R)),
        ("pace", lambda tl, R, **k: pace(tl, R, k.get("spec"))),
        ("mobile", lambda tl, R, **k: mobile(tl, R)),
        ("legal", lambda tl, R, **k: legal(tl, root=k.get("root"))),
-       ("audio", lambda tl, R, **k: audio(k.get("render"), R))]
+       ("audio", lambda tl, R, **k: audio(k.get("render"), R)),
+       ("words", lambda tl, R, **k: words(k.get("render"), k.get("words_json"), k.get("transcribe"),
+                                           k.get("lang", "en"), k.get("min_coverage"))),
+       ("flash", lambda tl, R, **k: flash(k.get("render"), limit=3.0))]
 
-def run_all(tl, R, spec=None, render=None, root=None):
+def run_all(tl, R, spec=None, render=None, root=None, words_json=None, transcribe=None,
+            lang="en", min_coverage=None):
     out = []
     for name, fn in ALL:
-        out.append((name, fn(tl, R, spec=spec, render=render, root=root)))
+        out.append((name, fn(tl, R, spec=spec, render=render, root=root, words_json=words_json,
+                             transcribe=transcribe, lang=lang, min_coverage=min_coverage)))
     return out

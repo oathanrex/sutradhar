@@ -1,0 +1,38 @@
+{
+  "engine": "sutradhar",
+  "timeline": {
+    "path": "examples/demo-30s/plan/timeline.json",
+    "sha256_16": "8e8221a500465608",
+    "shots": 12,
+    "duration_s": 30.0
+  },
+  "config": {
+    "pack": "tutorial",
+    "locale": "en",
+    "format": "long-16x9",
+    "resolved_sha256_16": "9616c0d53c2d5c8a"
+  },
+  "assets": [
+    {
+      "path": "broll/desk.mp4",
+      "sha256_16": null
+    },
+    {
+      "path": "broll/site.mp4",
+      "sha256_16": null
+    },
+    {
+      "path": "gifs/react.mp4",
+      "sha256_16": null
+    },
+    {
+      "path": "screens/app.mp4",
+      "sha256_16": null
+    }
+  ],
+  "html": {
+    "player_sha256_16": "7d39c32754e95ca7",
+    "hyperframes_sha256_16": "aa2ebb750da77a16"
+  },
+  "structural_problems": []
+}

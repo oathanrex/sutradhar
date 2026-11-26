@@ -26,7 +26,8 @@ The engine writes HTML; you write `plan/timeline.json` and the shots file. You n
 4. **Emit `plan/timeline.json`** (`version, video, format, duration_s, shots[]` with `start_s, end_s, kind, text?,
    media?[], sfx?`). This file is the contract: gates, spec verify and the retention loop all read it. If the
    build script does not write it yet, write it before building.
-5. **Storyboard gate.** One still per shot, stitched into one image, shown with the words under each frame.
+5. **Storyboard gate.** `sutra build <timeline> --out videos/<name>/project` writes a scrubbable shot sheet
+   (`index.html`) plus the HyperFrames composition and a receipt. Open the player, scrub it, show it.
    Wait for a go. Change only what they flag. Never render to MP4 before this approval.
 6. **Build and render**, versioned (`v01`, `v02`, never overwrite). Then run the `gate` skill.
 7. **Hand over** with a changelog: what changed since v01, which gates pass, which numbers are off-spec and why.
@@ -43,3 +44,4 @@ The engine writes HTML; you write `plan/timeline.json` and the shots file. You n
 - [ ] `sutra spec verify` was run and every FAIL is either fixed or listed in `plan/deviations.md`
 - [ ] storyboard was approved by the creator
 - [ ] the render exists as `v##` and was checked with the `gate` skill
+- [ ] `project/receipt.json` exists, and its `structural_problems` list is empty

@@ -20,6 +20,8 @@ in CI with no GPU, no network and no ffmpeg.
         ├──────────────────────────────────────────────────────────┤
         │  timeline.json                                            │  THE CONTRACT between edit and QA
         ├──────────────────────────────────────────────────────────┤
+        │  sutra build  ->  shot-sheet player + composition + receipt│  the artifact layer
+        ├──────────────────────────────────────────────────────────┤
         │  HyperFrames (render) · ffmpeg (loudness) · whisper (words) │  optional, replaceable
         └──────────────────────────────────────────────────────────┘
 ```
@@ -59,6 +61,12 @@ format produces a warning, not a silent average.
 
 Format multipliers are applied **after** merging (`portrait` = shot durations × 0.7), so a pack never has to know it
 is being rendered vertically.
+
+## The receipt
+
+Every build writes `receipt.json`: content hashes of the timeline, the resolved config, each asset, and both HTML
+outputs, plus the structural check result. So "which inputs produced this MP4" is a hash lookup, not a memory
+test, and CI can assert the structure without a renderer.
 
 ## Validators are hand-written
 

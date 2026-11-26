@@ -87,5 +87,8 @@
   "gate": {
     "max_silence_ms": 400,
     "sfx_per_min_max": 18
-  }
+  },
+  "evidence": [],
+  "measured": false,
+  "note": "Numbers here are starting defaults chosen from the category's conventions, NOT measurements. Add 3 real videos with `sutra evidence add` before quoting them anywhere."
 }

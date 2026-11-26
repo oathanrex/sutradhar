@@ -1,24 +1,59 @@
 name: ci
 on: [push, pull_request]
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }} / py${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
         python: ["3.10", "3.12"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "${{ matrix.python }}" }
-      - name: no third-party imports in the core
+      - name: the core stays dependency-free
+        shell: bash
         run: "! grep -rn '^import \\(requests\\|numpy\\|PIL\\|jsonschema\\|yaml\\)' tools/sutra"
-      - name: tests
+      - name: tests (unit + CLI surface)
+        shell: bash
         run: PYTHONPATH=tools python -m unittest discover -s tests -v
-      - name: validate everything
+      - name: everything validates
+        shell: bash
         run: PYTHONPATH=tools python -m sutra check --timeline examples/demo-30s/plan/timeline.json
-      - name: every pack x locale x format
+      - name: 60 pack x locale x format combinations
+        shell: bash
         run: PYTHONPATH=tools python scripts/matrix.py
-      - name: gates must pass on the demo
+      - name: build the project and verify the structure
+        shell: bash
+        run: PYTHONPATH=tools python -m sutra build examples/demo-30s/plan/timeline.json --out build/project --pack tutorial
+      - name: gates on the plan (render-dependent gates must SKIP, never PASS)
+        shell: bash
         run: PYTHONPATH=tools python -m sutra gate --timeline examples/demo-30s/plan/timeline.json --pack tutorial
+      - name: packs must declare their evidence
+        shell: bash
+        run: PYTHONPATH=tools python -m sutra evidence
       - name: agent files are mirrors, not forks
+        shell: bash
         run: diff AGENTS.md CLAUDE.md && diff AGENTS.md GEMINI.md
+
+  demo:
+    name: render the preview (needs pillow + a static ffmpeg)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install pillow numpy imageio-ffmpeg
+      - name: render docs/demo.mp4 from the timeline
+        run: python scripts/make_demo.py examples/demo-30s/plan/timeline.json build/demo.mp4
+      - name: the rendered demo must pass the render-dependent gates
+        run: |
+          PYTHONPATH=tools python -m sutra gate --timeline examples/demo-30s/plan/timeline.json \
+            --render build/demo.mp4 --pack tutorial | tee gates.txt
+          grep -q "audio     PASS" gates.txt
+          grep -q "flash     PASS" gates.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: demo-render, path: build/demo.mp4 }

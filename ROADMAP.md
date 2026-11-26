@@ -34,6 +34,24 @@ too much of what it should produce is missing.
 
 ---
 
+## Status — v1.1.0 closes P0 and most of P1
+
+| item | status |
+|---|---|
+| 1. composition builder | **done** (`sutra build`: player + composition + receipt) |
+| 2. words gate for real | **done**, tested with an injected transcriber |
+| 3. evidence in every pack | **machinery done, data not**: 0/10 measured on purpose, see `docs/EVIDENCE.md` |
+| 4. automated retention intake | **done** (`sutra analytics`, device flow + reports API) |
+| 5. statistics instead of heuristics | **done** (min 3 uses, bootstrap CI, MAD, materiality threshold) |
+| 6. visual gates | **partly**: flash done and tested; legibility is still a heuristic (`visual.frame_spread`) |
+| 7. cross-platform CI + CLI tests | **done** (3 OS x 2 Python, 7 CLI subprocess tests) |
+| 8. content-hash receipts | **done** (`renders.../receipt.json`) |
+| 9-12 (install, demo, locales, Hindi) | open; the demo MP4 landed early (`docs/demo.mp4`) |
+
+**Score after v1.1: 7.5 / 10.** What moved it: the tool can now produce an artifact, the headline gate is real,
+and the numbers can no longer be faked. What still holds it back: no pack is measured, HyperFrames compatibility
+is asserted rather than verified in CI, and no published video with a retention curve exists yet.
+
 ## P0 — this week (turns it into a tool, ~2 days)
 
 **1. The composition builder.** `tools/sutra/build.py` → `timeline.json` → HyperFrames project (one composition

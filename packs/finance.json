@@ -97,5 +97,8 @@
     "require_disclaimer": true,
     "text_contrast_min": 7.0,
     "max_words_on_screen": 6
-  }
+  },
+  "evidence": [],
+  "measured": false,
+  "note": "Numbers here are starting defaults chosen from the category's conventions, NOT measurements. Add 3 real videos with `sutra evidence add` before quoting them anywhere."
 }

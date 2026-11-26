@@ -46,3 +46,18 @@ def contrast(a, b):
 
 def slug(s):
     return re.sub(r"[^a-z0-9]+", "-", str(s).lower()).strip("-")
+
+
+def ffmpeg_exe():
+    """ffmpeg from PATH, or the static binary inside the `imageio-ffmpeg` wheel.
+
+    Returns None when neither exists, so gates can SKIP with an honest message instead of a traceback."""
+    import shutil
+    exe = shutil.which("ffmpeg")
+    if exe:
+        return exe
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        return None

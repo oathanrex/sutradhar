@@ -1,6 +1,11 @@
 """sutra doctor: say exactly what is missing and the command that fixes it."""
 import importlib.util, pathlib, platform, shutil, subprocess, sys
-from .util import ROOT, table
+from .util import ROOT, table, ffmpeg_exe
+
+
+def _ff():
+    e = ffmpeg_exe()
+    return ("imageio-ffmpeg wheel" if e and "site-packages" in e else e) if e else None
 
 def _ver(cmd, args=("--version",)):
     if not shutil.which(cmd): return None
@@ -22,8 +27,8 @@ def _devanagari_detail():
 
 CHECKS = [
     ("python", lambda: (sys.version.split()[0] >= "3.10"), sys.version.split()[0], "install Python 3.10+"),
-    ("ffmpeg", lambda: bool(shutil.which("ffmpeg")), _ver("ffmpeg", ("-version",)) or "missing",
-     "winget install Gyan.FFmpeg  |  brew install ffmpeg"),
+    ("ffmpeg", lambda: bool(_ff()), _ff() or "missing",
+     "winget install Gyan.FFmpeg  |  brew install ffmpeg  |  pip install imageio-ffmpeg"),
     ("ffprobe", lambda: bool(shutil.which("ffprobe")), _ver("ffprobe", ("-version",)) or "missing",
      "ships with ffmpeg"),
     ("node 22+", lambda: bool(shutil.which("node")), _ver("node") or "missing", "https://nodejs.org"),
