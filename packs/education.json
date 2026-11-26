@@ -1,0 +1,90 @@
+{
+  "id": "education",
+  "name": "Education / Exam Prep",
+  "aliases": [
+    "teaching",
+    "upsc",
+    "jee",
+    "course"
+  ],
+  "who": "Teaching a subject, exam prep, lecture-style content.",
+  "spec_patch": {
+    "pacing": {
+      "cuts_per_min": 18,
+      "avg_shot_len_s": 3.3,
+      "max_hold_s": 6.0,
+      "motion_per_shot": 1
+    },
+    "text": {
+      "max_chars_per_line": 16,
+      "words_on_screen_per_shot": 3.4
+    },
+    "audio": {
+      "sfx_per_min": 4
+    }
+  },
+  "shot_mix": {
+    "words": 0.22,
+    "nodes": 0.18,
+    "flow": 0.14,
+    "screen": 0.14,
+    "chips": 0.1,
+    "bars2": 0.08,
+    "file": 0.08,
+    "chapter": 0.06
+  },
+  "structure": [
+    {
+      "beat": "hook",
+      "start_s": 0,
+      "target_s": 10,
+      "job": "the question the exam actually asks"
+    },
+    {
+      "beat": "map",
+      "start_s": 10,
+      "target_s": 20,
+      "job": "the whole topic in one picture"
+    },
+    {
+      "beat": "teach",
+      "start_s": 30,
+      "target_s": 300,
+      "job": "one concept per beat, diagram on screen"
+    },
+    {
+      "beat": "example",
+      "start_s": 0,
+      "target_s": 90,
+      "job": "solved out loud, steps visible"
+    },
+    {
+      "beat": "recall",
+      "start_s": 0,
+      "target_s": 25,
+      "job": "quick self-test question"
+    },
+    {
+      "beat": "summary",
+      "start_s": 0,
+      "target_s": 15,
+      "job": "the map again, now filled in"
+    }
+  ],
+  "retention_risks": [
+    "talking over a slide with 40 words",
+    "concept spoken without a diagram",
+    "pace too fast for note-taking",
+    "no recall moment"
+  ],
+  "hook_patterns": [
+    "the exam question in the first 3 s",
+    "'this one concept is worth N marks'",
+    "the topic map before the detail"
+  ],
+  "never": [
+    "never more than 7 words per card",
+    "no decorations that move during explanation"
+  ],
+  "gate": {}
+}

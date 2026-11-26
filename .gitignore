@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.agents/
+videos/
+renders/
+analytics/*.csv
+!analytics/example_retention.csv
+library/**/*.mp4
+library/**/*.mov
+library/**/*.wav
+library/**/*.mp3
+tools/.env
+.DS_Store

@@ -1,0 +1,100 @@
+{
+  "id": "tool-review",
+  "name": "Tool / Product Review",
+  "aliases": [
+    "tools",
+    "saas",
+    "review"
+  ],
+  "who": "Reviewing or comparing tools, apps, AI products, hardware.",
+  "spec_patch": {
+    "pacing": {
+      "cuts_per_min": 26,
+      "avg_shot_len_s": 2.3,
+      "max_hold_s": 4.5,
+      "motion_per_shot": 1
+    },
+    "text": {
+      "max_chars_per_line": 18,
+      "words_on_screen_per_shot": 3.4
+    },
+    "audio": {
+      "sfx_per_min": 8
+    }
+  },
+  "shot_mix": {
+    "pick2": 0.16,
+    "screen": 0.24,
+    "words": 0.18,
+    "bars2": 0.1,
+    "chips": 0.1,
+    "full": 0.08,
+    "hub": 0.06,
+    "card": 0.06,
+    "gauge": 0.02
+  },
+  "structure": [
+    {
+      "beat": "hook",
+      "start_s": 0,
+      "target_s": 12,
+      "job": "the surprising claim or the price"
+    },
+    {
+      "beat": "context",
+      "start_s": 12,
+      "target_s": 20,
+      "job": "what it is and who it is for"
+    },
+    {
+      "beat": "proof",
+      "start_s": 32,
+      "target_s": 180,
+      "job": "demonstrated live, not described"
+    },
+    {
+      "beat": "compare",
+      "start_s": 0,
+      "target_s": 90,
+      "job": "side by side, same task, same conditions"
+    },
+    {
+      "beat": "limits",
+      "start_s": 0,
+      "target_s": 45,
+      "job": "where it breaks - this is the credibility"
+    },
+    {
+      "beat": "verdict",
+      "start_s": 0,
+      "target_s": 20,
+      "job": "who should pay, who should not"
+    },
+    {
+      "beat": "cta",
+      "start_s": 0,
+      "target_s": 8,
+      "job": "one action"
+    }
+  ],
+  "retention_risks": [
+    "reviewing without using it",
+    "spec dump with no demo",
+    "no comparison baseline",
+    "hiding the price",
+    "conclusion before the evidence"
+  ],
+  "hook_patterns": [
+    "the price in the first 5 s",
+    "'I used it for N days, here is what broke'",
+    "comparison on screen before any opinion"
+  ],
+  "never": [
+    "no affiliate claim without disclosure",
+    "never invent benchmark numbers",
+    "no sponsor read before 45 s"
+  ],
+  "gate": {
+    "require_price_or_free_on_screen": true
+  }
+}

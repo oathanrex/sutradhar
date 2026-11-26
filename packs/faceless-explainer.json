@@ -1,0 +1,91 @@
+{
+  "id": "faceless-explainer",
+  "name": "Faceless Explainer / Essay",
+  "aliases": [
+    "essay",
+    "faceless",
+    "documentary-lite"
+  ],
+  "who": "Voiceover-driven explainers with no face on camera.",
+  "spec_patch": {
+    "pacing": {
+      "cuts_per_min": 30,
+      "avg_shot_len_s": 2.0,
+      "max_hold_s": 4.0,
+      "motion_per_shot": 1
+    },
+    "text": {
+      "max_chars_per_line": 16,
+      "words_on_screen_per_shot": 3.4
+    },
+    "audio": {
+      "sfx_per_min": 10
+    }
+  },
+  "shot_mix": {
+    "words": 0.24,
+    "flow": 0.14,
+    "full": 0.16,
+    "screen": 0.12,
+    "nodes": 0.1,
+    "bars2": 0.08,
+    "gif": 0.06,
+    "chapter": 0.05,
+    "map": 0.05
+  },
+  "structure": [
+    {
+      "beat": "hook",
+      "start_s": 0,
+      "target_s": 12,
+      "job": "a specific number or a contradiction"
+    },
+    {
+      "beat": "stakes",
+      "start_s": 12,
+      "target_s": 18,
+      "job": "why it matters to them today"
+    },
+    {
+      "beat": "act1",
+      "start_s": 30,
+      "target_s": 120,
+      "job": "the setup, one idea"
+    },
+    {
+      "beat": "act2",
+      "start_s": 0,
+      "target_s": 150,
+      "job": "the turn, the complication"
+    },
+    {
+      "beat": "act3",
+      "start_s": 0,
+      "target_s": 120,
+      "job": "the resolution with proof"
+    },
+    {
+      "beat": "takeaway",
+      "start_s": 0,
+      "target_s": 25,
+      "job": "one line they can repeat"
+    }
+  ],
+  "retention_risks": [
+    "static b-roll under a whole paragraph",
+    "no visual change during exposition",
+    "explaining before the viewer cares",
+    "stock footage with no relationship to the words"
+  ],
+  "hook_patterns": [
+    "a number in the first sentence",
+    "'everyone tells you X. they are wrong, here is why'",
+    "one unresolved question held through the middle"
+  ],
+  "never": [
+    "no clichéd stock people",
+    "no AI-generated faces as evidence",
+    "no unattributed statistics"
+  ],
+  "gate": {}
+}

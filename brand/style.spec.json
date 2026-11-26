@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "measured_from": ["examples/demo-30s/plan/timeline.json"],
+  "evidence": {
+    "pacing.cuts_per_min": "TEMPLATE: replace with a count from contact sheets of 3 reference videos",
+    "audio.sfx_per_min": "TEMPLATE: count sound effects per minute, do not estimate"
+  },
+  "pacing": { "cuts_per_min": 22, "avg_shot_len_s": 2.7, "max_hold_s": 5.0, "motion_per_shot": 1 },
+  "text": { "max_chars_per_line": 18, "words_on_screen_per_shot": 3.4 },
+  "camera": { "zoom_in_per_shot_pct": 4.0, "whip_pans_per_min": 0.0, "shake": false },
+  "audio": { "sfx_per_min": 5, "sfx_lead_ms": -40, "voice_lufs": -14, "duck_db": -18, "silence_max_ms": 400 },
+  "colour": { "contrast_min": 4.5 },
+  "note": "TEMPLATE. Issued numbers here are defaults, not measurements. Extract your own with: sutra spec extract --from <timelines>"
+}

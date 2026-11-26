@@ -1,0 +1,89 @@
+{
+  "id": "vlog",
+  "name": "Vlog / Lifestyle / Travel",
+  "aliases": [
+    "lifestyle",
+    "travel",
+    "day-in-life"
+  ],
+  "who": "Personal, lifestyle, travel, behind-the-scenes.",
+  "spec_patch": {
+    "pacing": {
+      "cuts_per_min": 24,
+      "avg_shot_len_s": 2.5,
+      "max_hold_s": 5.0,
+      "motion_per_shot": 1
+    },
+    "text": {
+      "max_chars_per_line": 18,
+      "words_on_screen_per_shot": 3.4
+    },
+    "audio": {
+      "sfx_per_min": 7
+    }
+  },
+  "shot_mix": {
+    "full": 0.34,
+    "words": 0.18,
+    "chips": 0.12,
+    "gif": 0.1,
+    "screen": 0.06,
+    "chapter": 0.08,
+    "split": 0.06,
+    "pick2": 0.06
+  },
+  "structure": [
+    {
+      "beat": "hook",
+      "start_s": 0,
+      "target_s": 10,
+      "job": "the most interesting frame of the day"
+    },
+    {
+      "beat": "setup",
+      "start_s": 10,
+      "target_s": 30,
+      "job": "where, why, what is at stake"
+    },
+    {
+      "beat": "beats",
+      "start_s": 40,
+      "target_s": 300,
+      "job": "three mini-stories, one per location"
+    },
+    {
+      "beat": "turn",
+      "start_s": 0,
+      "target_s": 40,
+      "job": "something goes wrong or unexpected"
+    },
+    {
+      "beat": "payoff",
+      "start_s": 0,
+      "target_s": 60,
+      "job": "the moment the thumbnail promised"
+    },
+    {
+      "beat": "close",
+      "start_s": 0,
+      "target_s": 15,
+      "job": "one honest line"
+    }
+  ],
+  "retention_risks": [
+    "grocery-list chronology",
+    "no conflict or turn",
+    "music-only montage longer than 20 s",
+    "thumbnail promise never delivered"
+  ],
+  "hook_patterns": [
+    "start with the payoff frame",
+    "'I did not expect this to happen'",
+    "time in the first 5 s ('it is 4am')"
+  ],
+  "never": [
+    "no fake emotion shots",
+    "no music-only stretch over 20 s"
+  ],
+  "gate": {}
+}

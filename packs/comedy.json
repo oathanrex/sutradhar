@@ -1,0 +1,91 @@
+{
+  "id": "comedy",
+  "name": "Comedy / Meme / Sketch",
+  "aliases": [
+    "funny",
+    "meme",
+    "entertainment"
+  ],
+  "who": "Sketch, meme commentary, comedic reaction and edits.",
+  "spec_patch": {
+    "pacing": {
+      "cuts_per_min": 45,
+      "avg_shot_len_s": 1.4,
+      "max_hold_s": 2.2,
+      "motion_per_shot": 1
+    },
+    "text": {
+      "max_chars_per_line": 12,
+      "words_on_screen_per_shot": 3.4
+    },
+    "audio": {
+      "sfx_per_min": 14
+    }
+  },
+  "shot_mix": {
+    "gif": 0.22,
+    "words": 0.24,
+    "full": 0.16,
+    "strike2": 0.12,
+    "chips": 0.1,
+    "split": 0.08,
+    "pick2": 0.08
+  },
+  "structure": [
+    {
+      "beat": "hook",
+      "start_s": 0,
+      "target_s": 4,
+      "job": "the first half of the joke, no setup lines"
+    },
+    {
+      "beat": "setup",
+      "start_s": 4,
+      "target_s": 8,
+      "job": "minimum context, one line"
+    },
+    {
+      "beat": "punch",
+      "start_s": 12,
+      "target_s": 20,
+      "job": "the turn, visual + audio must land together"
+    },
+    {
+      "beat": "escalate",
+      "start_s": 32,
+      "target_s": 60,
+      "job": "three variations, each faster"
+    },
+    {
+      "beat": "button",
+      "start_s": 0,
+      "target_s": 8,
+      "job": "the final small beat"
+    },
+    {
+      "beat": "cta",
+      "start_s": 0,
+      "target_s": 5,
+      "job": "one line, fast"
+    }
+  ],
+  "retention_risks": [
+    "explaining the joke",
+    "any dead air over 400 ms",
+    "punchline before the visual",
+    "trend copied a week late"
+  ],
+  "hook_patterns": [
+    "start mid-joke",
+    "'nobody: / me:' construction",
+    "the swerve in the first 2 s"
+  ],
+  "never": [
+    "never reuse a clip you have no licence for",
+    "no racial or communal jokes"
+  ],
+  "gate": {
+    "max_silence_ms": 400,
+    "sfx_per_min_max": 18
+  }
+}

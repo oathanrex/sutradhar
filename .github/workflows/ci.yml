@@ -1,0 +1,24 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ matrix.python }}" }
+      - name: no third-party imports in the core
+        run: "! grep -rn '^import \\(requests\\|numpy\\|PIL\\|jsonschema\\|yaml\\)' tools/sutra"
+      - name: tests
+        run: PYTHONPATH=tools python -m unittest discover -s tests -v
+      - name: validate everything
+        run: PYTHONPATH=tools python -m sutra check --timeline examples/demo-30s/plan/timeline.json
+      - name: every pack x locale x format
+        run: PYTHONPATH=tools python scripts/matrix.py
+      - name: gates must pass on the demo
+        run: PYTHONPATH=tools python -m sutra gate --timeline examples/demo-30s/plan/timeline.json --pack tutorial
+      - name: agent files are mirrors, not forks
+        run: diff AGENTS.md CLAUDE.md && diff AGENTS.md GEMINI.md

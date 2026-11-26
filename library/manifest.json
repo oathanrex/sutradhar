@@ -1,0 +1,57 @@
+{
+  "version": "1.0",
+  "assets": [
+    {
+      "path": "broll/site.mp4",
+      "kind": "visual",
+      "duration_s": 8.0,
+      "w": 1920,
+      "h": 1080,
+      "tags": [
+        "broll",
+        "web"
+      ],
+      "license": "original",
+      "source": "own screen recording"
+    },
+    {
+      "path": "broll/desk.mp4",
+      "kind": "visual",
+      "duration_s": 12.0,
+      "w": 1920,
+      "h": 1080,
+      "tags": [
+        "broll",
+        "desk"
+      ],
+      "license": "original",
+      "source": "own camera"
+    },
+    {
+      "path": "screens/app.mp4",
+      "kind": "visual",
+      "duration_s": 20.0,
+      "w": 1728,
+      "h": 884,
+      "tags": [
+        "screen",
+        "app"
+      ],
+      "license": "original",
+      "source": "own screen recording"
+    },
+    {
+      "path": "gifs/react.mp4",
+      "kind": "visual",
+      "duration_s": 3.0,
+      "w": 966,
+      "h": 726,
+      "tags": [
+        "gif",
+        "reaction"
+      ],
+      "license": "CC0",
+      "source": "pixabay"
+    }
+  ]
+}

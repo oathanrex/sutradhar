@@ -1,0 +1,29 @@
+{
+  "id": "hi",
+  "name": "Hindi (Devanagari)",
+  "whisper_lang": "hi",
+  "whisper_model": "large-v3",
+  "caption": {
+    "max_chars_per_line": 28,
+    "case": "NATIVE",
+    "words_per_min_speech": 120,
+    "punctuation_on_screen": true
+  },
+  "text": {
+    "expansion_vs_en": 1.18,
+    "letter_spacing_px": 1,
+    "line_height": 1.08
+  },
+  "fonts": {
+    "needs_devanagari": true,
+    "suggested_free": ["Baloo Bhai 2", "Mukta", "Tiro Devanagari Hindi", "Kalam"],
+    "avoid": ["Inter", "Archivo Black"]
+  },
+  "notes": [
+    "Devanagari has no upper case: NEVER use a caps style, use weight 700-800 instead.",
+    "Matras sit above the line: line_height must be >= 1.05 or the top matra clips.",
+    "Conjuncts make words wider: budget 1.18x the English character count per line.",
+    "Do not transliterate the script into Roman inside captions. Captions follow the audio script.",
+    "Whisper small.en will silently produce garbage on Hindi. Model must be large-v3 or a hi-finetune."
+  ]
+}

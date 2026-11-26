@@ -1,0 +1,21 @@
+{
+  "background": "#0E0F12",
+  "text": "#F4F4F2",
+  "accent": "#F2C200",
+  "accent_2": null,
+  "font_title": "Inter Tight",
+  "font_body": "Inter Tight",
+  "font_mono": "JetBrains Mono",
+  "caption_size": 56,
+  "caption_position": "bottom",
+  "max_hold": 5.0,
+  "sfx": [
+    "click",
+    "whoosh",
+    "pop",
+    "ding"
+  ],
+  "music": false,
+  "note": "TEMPLATE. This is the neutral default. Say 'build my brand' and it gets replaced with your own answers, dated.",
+  "caption_case": "UPPER"
+}

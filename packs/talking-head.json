@@ -1,0 +1,89 @@
+{
+  "id": "talking-head",
+  "name": "Talking Head / Commentary",
+  "aliases": [
+    "opinion",
+    "commentary",
+    "podcast"
+  ],
+  "who": "Face on camera, opinion and commentary driven.",
+  "spec_patch": {
+    "pacing": {
+      "cuts_per_min": 16,
+      "avg_shot_len_s": 3.8,
+      "max_hold_s": 6.5,
+      "motion_per_shot": 1
+    },
+    "text": {
+      "max_chars_per_line": 18,
+      "words_on_screen_per_shot": 3.4
+    },
+    "audio": {
+      "sfx_per_min": 4
+    }
+  },
+  "shot_mix": {
+    "words": 0.26,
+    "full": 0.2,
+    "chips": 0.14,
+    "screen": 0.12,
+    "strike2": 0.1,
+    "pick2": 0.08,
+    "gif": 0.06,
+    "chapter": 0.04
+  },
+  "structure": [
+    {
+      "beat": "hook",
+      "start_s": 0,
+      "target_s": 10,
+      "job": "the most controversial true sentence"
+    },
+    {
+      "beat": "claim",
+      "start_s": 10,
+      "target_s": 25,
+      "job": "the position, stated plainly"
+    },
+    {
+      "beat": "evidence",
+      "start_s": 35,
+      "target_s": 150,
+      "job": "two or three proofs"
+    },
+    {
+      "beat": "objection",
+      "start_s": 0,
+      "target_s": 60,
+      "job": "the strongest counter-argument, out loud"
+    },
+    {
+      "beat": "answer",
+      "start_s": 0,
+      "target_s": 55,
+      "job": "why it still holds"
+    },
+    {
+      "beat": "close",
+      "start_s": 0,
+      "target_s": 20,
+      "job": "one line they will quote"
+    }
+  ],
+  "retention_risks": [
+    "b-roll covering the face for too long",
+    "no visual change during long speech",
+    "claim with no evidence on screen",
+    "punching down for engagement"
+  ],
+  "hook_patterns": [
+    "a sentence people will argue with",
+    "'I changed my mind about X and here is why'",
+    "the counter-argument stated better than the audience could"
+  ],
+  "never": [
+    "no jump-cut abuse",
+    "no text on top of the speaker's mouth"
+  ],
+  "gate": {}
+}

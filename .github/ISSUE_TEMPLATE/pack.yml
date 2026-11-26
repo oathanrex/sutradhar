@@ -1,0 +1,21 @@
+name: New category pack
+description: Propose a creator category this repo does not cover
+body:
+  - type: input
+    id: category
+    attributes: { label: Category name }
+    validations: { required: true }
+  - type: textarea
+    id: who
+    attributes: { label: Who makes this, and what does their audience expect }
+    validations: { required: true }
+  - type: textarea
+    id: numbers
+    attributes:
+      label: Numbers from 3 real videos in this category
+      description: "cuts per minute, average shot length, longest shot, sound effects per minute, max characters on screen"
+    validations: { required: true }
+  - type: textarea
+    id: fails
+    attributes: { label: How videos in this category usually fail }
+    validations: { required: true }

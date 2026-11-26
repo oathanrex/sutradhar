@@ -1,0 +1,25 @@
+{
+  "id": "en",
+  "name": "English",
+  "whisper_lang": "en",
+  "whisper_model": "small.en",
+  "caption": {
+    "max_chars_per_line": 42,
+    "case": "UPPER",
+    "words_per_min_speech": 150,
+    "punctuation_on_screen": false
+  },
+  "text": {
+    "expansion_vs_en": 1.0,
+    "letter_spacing_px": 0,
+    "line_height": 0.92
+  },
+  "fonts": {
+    "needs_devanagari": false,
+    "suggested_free": ["Inter Tight", "Bricolage Grotesque", "Archivo Black", "JetBrains Mono"]
+  },
+  "notes": [
+    "English caps are safe up to 3 words per card; beyond that use sentence case.",
+    "Numbers under 10 read faster as words on screen."
+  ]
+}

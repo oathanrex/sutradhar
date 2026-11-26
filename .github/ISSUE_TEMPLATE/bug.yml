@@ -1,0 +1,14 @@
+name: Bug
+description: Something in sutra is broken
+body:
+  - type: textarea
+    id: what
+    attributes: { label: What happened, description: "Paste the command and the full output." }
+    validations: { required: true }
+  - type: input
+    id: doctor
+    attributes: { label: "Output of `sutra doctor`" }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: What you expected instead }

@@ -1,0 +1,28 @@
+{
+  "id": "hinglish",
+  "name": "Hinglish / Code-switched",
+  "whisper_lang": "hi",
+  "whisper_model": "large-v3",
+  "caption": {
+    "max_chars_per_line": 30,
+    "case": "NATIVE",
+    "words_per_min_speech": 130,
+    "punctuation_on_screen": true,
+    "keep_code_switching": true
+  },
+  "text": {
+    "expansion_vs_en": 1.12,
+    "letter_spacing_px": 0,
+    "line_height": 1.06
+  },
+  "fonts": {
+    "needs_devanagari": true,
+    "suggested_free": ["Baloo Bhai 2", "Mukta", "Inter Tight (Latin fallback)"]
+  },
+  "notes": [
+    "Captions must be written exactly as spoken: 'yaar ye kaam nahi karega' stays Roman, do not convert it to Devanagari.",
+    "Set the font stack as: Devanagari face first, then a Latin face, so mixed lines do not jump in size.",
+    "word_timings must come from whisper large-v3 with language=hi; code-switched audio is mis-timed by small models.",
+    "English technical words stay in English. Never translate a product name."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "portrait-9x16",
+  "name": "Shorts / Reels, 9:16",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "safe": {
+    "top_pct": 14,
+    "bottom_pct": 62,
+    "side_pct": 8,
+    "caption_size_px": 72,
+    "caption_size_mult": 1.25
+  },
+  "pacing_mult": 0.7,
+  "notes": [
+    "14% top and 62% bottom safe limits: the platform draws its own UI over both.",
+    "A 9:16 short must repeat the hook visually at 2 s and 6 s: viewers scroll, they do not rewind.",
+    "Cut every shot 30% faster than the long-form version of the same footage."
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "id": "gaming",
+  "name": "Gaming / Esports",
+  "aliases": [
+    "games",
+    "esports",
+    "stream"
+  ],
+  "who": "Gameplay, esports, gaming commentary and highlights.",
+  "spec_patch": {
+    "pacing": {
+      "cuts_per_min": 38,
+      "avg_shot_len_s": 1.6,
+      "max_hold_s": 3.0,
+      "motion_per_shot": 1
+    },
+    "text": {
+      "max_chars_per_line": 14,
+      "words_on_screen_per_shot": 3.4
+    },
+    "audio": {
+      "sfx_per_min": 12
+    }
+  },
+  "shot_mix": {
+    "full": 0.4,
+    "words": 0.2,
+    "chips": 0.12,
+    "screen": 0.1,
+    "split": 0.08,
+    "bars2": 0.06,
+    "gif": 0.04
+  },
+  "structure": [
+    {
+      "beat": "hook",
+      "start_s": 0,
+      "target_s": 8,
+      "job": "the play, without the outcome"
+    },
+    {
+      "beat": "context",
+      "start_s": 8,
+      "target_s": 15,
+      "job": "the stakes: rank, timer, prize"
+    },
+    {
+      "beat": "play",
+      "start_s": 23,
+      "target_s": 180,
+      "job": "the run, with the key moment marked"
+    },
+    {
+      "beat": "breakdown",
+      "start_s": 0,
+      "target_s": 60,
+      "job": "why it worked, frame by frame"
+    },
+    {
+      "beat": "next",
+      "start_s": 0,
+      "target_s": 15,
+      "job": "what to try yourself"
+    },
+    {
+      "beat": "cta",
+      "start_s": 0,
+      "target_s": 6,
+      "job": "one line"
+    }
+  ],
+  "retention_risks": [
+    "highlight with no stakes",
+    "no slow-motion on the key frame",
+    "game audio louder than voice",
+    "facecam covering the minimap"
+  ],
+  "hook_patterns": [
+    "start 3 s before the play, end 1 s after",
+    "'watch the minimap at this second'",
+    "the rank or prize on screen"
+  ],
+  "never": [
+    "no cheated or modded footage passed as real",
+    "no leaked content"
+  ],
+  "gate": {}
+}

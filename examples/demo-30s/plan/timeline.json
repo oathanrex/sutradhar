@@ -1,0 +1,119 @@
+{
+  "version": "1.0",
+  "video": "demo-30s",
+  "format": "long-16x9",
+  "duration_s": 30.0,
+  "shots": [
+    {
+      "i": 0,
+      "start_s": 0.0,
+      "end_s": 1.3,
+      "kind": "words",
+      "text": [
+        "3 TOOLS"
+      ]
+    },
+    {
+      "i": 1,
+      "start_s": 1.3,
+      "end_s": 4.0,
+      "kind": "screen",
+      "media": [
+        "broll/site.mp4"
+      ],
+      "sfx": "whoosh"
+    },
+    {
+      "i": 2,
+      "start_s": 4.0,
+      "end_s": 6.5,
+      "kind": "full",
+      "media": [
+        "broll/desk.mp4"
+      ]
+    },
+    {
+      "i": 3,
+      "start_s": 6.5,
+      "end_s": 9.0,
+      "kind": "words",
+      "text": [
+        "NO SETUP"
+      ]
+    },
+    {
+      "i": 4,
+      "start_s": 9.0,
+      "end_s": 11.5,
+      "kind": "screen",
+      "media": [
+        "screens/app.mp4"
+      ]
+    },
+    {
+      "i": 5,
+      "start_s": 11.5,
+      "end_s": 14.0,
+      "kind": "chips",
+      "text": [
+        "FREE",
+        "FAST"
+      ]
+    },
+    {
+      "i": 6,
+      "start_s": 14.0,
+      "end_s": 16.5,
+      "kind": "gif",
+      "media": [
+        "gifs/react.mp4"
+      ]
+    },
+    {
+      "i": 7,
+      "start_s": 16.5,
+      "end_s": 19.0,
+      "kind": "words",
+      "text": [
+        "10 MINUTES"
+      ]
+    },
+    {
+      "i": 8,
+      "start_s": 19.0,
+      "end_s": 21.5,
+      "kind": "screen",
+      "media": [
+        "screens/app.mp4"
+      ]
+    },
+    {
+      "i": 9,
+      "start_s": 21.5,
+      "end_s": 24.0,
+      "kind": "full",
+      "media": [
+        "broll/desk.mp4"
+      ],
+      "sfx": "whoosh"
+    },
+    {
+      "i": 10,
+      "start_s": 24.0,
+      "end_s": 26.5,
+      "kind": "words",
+      "text": [
+        "TRY IT"
+      ]
+    },
+    {
+      "i": 11,
+      "start_s": 26.5,
+      "end_s": 30.0,
+      "kind": "full",
+      "media": [
+        "broll/desk.mp4"
+      ]
+    }
+  ]
+}

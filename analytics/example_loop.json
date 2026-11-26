@@ -1,0 +1,56 @@
+{
+  "video": "demo-30s",
+  "rows": [
+    [
+      "gif",
+      1,
+      -20.1,
+      "-20.1 @ 14.0s",
+      "cut or shorten"
+    ],
+    [
+      "chips",
+      1,
+      -9.5,
+      "-9.5 @ 11.5s",
+      "cut or shorten"
+    ],
+    [
+      "full",
+      3,
+      -3.64,
+      "-7.71 @ 26.5s",
+      "cut or shorten"
+    ],
+    [
+      "screen",
+      3,
+      -1.91,
+      "-3.9 @ 9.0s",
+      "cut or shorten"
+    ],
+    [
+      "words",
+      4,
+      -0.9,
+      "-2.6 @ 24.0s",
+      "neutral"
+    ]
+  ],
+  "proposals": [
+    {
+      "kind": "full",
+      "appearances": 3,
+      "mean_delta_per_5s": -3.64,
+      "verdict": "cut or shorten",
+      "evidence": "3 appearances, mean -3.64% per 5s"
+    },
+    {
+      "kind": "screen",
+      "appearances": 3,
+      "mean_delta_per_5s": -1.91,
+      "verdict": "cut or shorten",
+      "evidence": "3 appearances, mean -1.91% per 5s"
+    }
+  ]
+}

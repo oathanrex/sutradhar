@@ -1,0 +1,97 @@
+{
+  "id": "tutorial",
+  "name": "Tutorial / How-to",
+  "aliases": [
+    "howto",
+    "coding",
+    "software"
+  ],
+  "who": "Teaching a concrete task the viewer will do after the video.",
+  "spec_patch": {
+    "pacing": {
+      "cuts_per_min": 22,
+      "avg_shot_len_s": 2.7,
+      "max_hold_s": 5.0,
+      "motion_per_shot": 1
+    },
+    "text": {
+      "max_chars_per_line": 20,
+      "words_on_screen_per_shot": 3.4
+    },
+    "audio": {
+      "sfx_per_min": 5
+    }
+  },
+  "shot_mix": {
+    "screen": 0.35,
+    "words": 0.2,
+    "term": 0.1,
+    "file": 0.08,
+    "full": 0.07,
+    "chapter": 0.06,
+    "chips": 0.06,
+    "flow": 0.04,
+    "rec": 0.04
+  },
+  "structure": [
+    {
+      "beat": "hook",
+      "start_s": 0,
+      "target_s": 10,
+      "job": "the finished result first, on screen"
+    },
+    {
+      "beat": "promise",
+      "start_s": 10,
+      "target_s": 8,
+      "job": "what they will be able to do"
+    },
+    {
+      "beat": "setup",
+      "start_s": 18,
+      "target_s": 30,
+      "job": "requirements, only what is needed"
+    },
+    {
+      "beat": "steps",
+      "start_s": 48,
+      "target_s": 360,
+      "job": "one step per beat, screen shows the action"
+    },
+    {
+      "beat": "pitfall",
+      "start_s": 0,
+      "target_s": 20,
+      "job": "the mistake everyone makes"
+    },
+    {
+      "beat": "recap",
+      "start_s": 0,
+      "target_s": 15,
+      "job": "3 lines max, one shot per line"
+    },
+    {
+      "beat": "cta",
+      "start_s": 0,
+      "target_s": 8,
+      "job": "one action, not three"
+    }
+  ],
+  "retention_risks": [
+    "setup too long (the #1 killer)",
+    "screen recording that shows nothing happening",
+    "no visible progress in the first 40 s",
+    "step spoken before it is shown"
+  ],
+  "hook_patterns": [
+    "show the end result in the first 3 s",
+    "name the mistake you made first",
+    "'by the end of this video you will have X'"
+  ],
+  "never": [
+    "no intro animation",
+    "never 'hey guys welcome back'",
+    "no unverified version numbers"
+  ],
+  "gate": {}
+}

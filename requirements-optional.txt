@@ -1,0 +1,3 @@
+# The core needs NOTHING. These unlock optional gates and helpers, one at a time.
+faster-whisper   # word timings + the words gate (re-transcribes the render). hi/hinglish needs large-v3.
+Pillow           # contact sheets, hook-legibility check at 320px

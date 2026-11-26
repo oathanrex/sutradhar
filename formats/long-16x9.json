@@ -1,0 +1,19 @@
+{
+  "id": "long-16x9",
+  "name": "Long form, 16:9",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "safe": {
+    "top_pct": 8,
+    "bottom_pct": 70,
+    "side_pct": 6,
+    "caption_size_px": 56,
+    "caption_size_mult": 1.0
+  },
+  "pacing_mult": 1.0,
+  "notes": [
+    "Keep all readable text above 70% of the height: the YouTube progress bar and the player UI sit below it.",
+    "Titles must survive being scaled to 320px wide for the small player."
+  ]
+}
