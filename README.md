@@ -134,6 +134,11 @@ Two stop signs. Everything else the agent should finish without asking you.
   printed — a silent skip is a lie.
 - Writing a shot still needs a human decision about what is on screen. Nothing here removes that.
 
+## Self-audit
+
+`ROADMAP.md` is an honest audit of v1.0, written the day it was tagged: a 6/10 with the exact gaps named,
+and the priority order that fixes them. Read it before trusting the README.
+
 ## Credits
 
 - [HyperFrames](https://github.com/heygen-com/hyperframes) — HTML → MP4 engine, skills, `frame.md`, block registry.
