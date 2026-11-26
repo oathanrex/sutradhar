@@ -16,8 +16,17 @@
   },
   "fonts": {
     "needs_devanagari": true,
-    "suggested_free": ["Baloo Bhai 2", "Mukta", "Tiro Devanagari Hindi", "Kalam"],
-    "avoid": ["Inter", "Archivo Black"]
+    "suggested_free": [
+      "Baloo Bhai 2",
+      "Mukta",
+      "Tiro Devanagari Hindi",
+      "Kalam"
+    ],
+    "avoid": [
+      "Inter",
+      "Archivo Black"
+    ],
+    "needs_script": "devanagari"
   },
   "notes": [
     "Devanagari has no upper case: NEVER use a caps style, use weight 700-800 instead.",

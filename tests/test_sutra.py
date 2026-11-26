@@ -51,15 +51,42 @@ class TestResolve(unittest.TestCase):
         self.assertTrue(any("no upper case" in w for w in R.warnings))
     def test_latin_font_warns_on_devanagari(self):
         R = resolve("education", "hinglish", "long-16x9")
-        self.assertTrue(any("Devanagari" in w for w in R.warnings), R.warnings)
+        self.assertTrue(any("devanagari" in w.lower() and "latin-only" in w.lower() for w in R.warnings), R.warnings)
     def test_all_packs_all_locales_all_formats_resolve(self):
         root = pathlib.Path(__file__).resolve().parents[1]
-        for p in ["tutorial", "tool-review", "faceless-explainer", "finance", "education",
-                  "talking-head", "story", "vlog", "comedy", "gaming"]:
-            for loc in ["en", "hi", "hinglish"]:
-                for fmt in ["long-16x9", "portrait-9x16"]:
+        packs = sorted(p.stem for p in (root / "packs").glob("*.json"))
+        locales = sorted(p.stem for p in (root / "locales").glob("*.json"))
+        formats = sorted(p.stem for p in (root / "formats").glob("*.json"))
+        self.assertGreaterEqual(len(locales), 6)
+        self.assertGreaterEqual(len(formats), 4)
+        n = 0
+        for p in packs:
+            for loc in locales:
+                for fmt in formats:
                     R = resolve(p, loc, fmt)
                     self.assertGreater(R.get("pacing.cuts_per_min"), 0)
+                    self.assertGreater(R.get("text.max_chars_per_line"), 0)
+                    n += 1
+        self.assertEqual(n, len(packs) * len(locales) * len(formats))
+
+    def test_every_script_locale_disables_caps_and_warns_about_the_font(self):
+        root = pathlib.Path(__file__).resolve().parents[1]
+        for f in sorted((root / "locales").glob("*.json")):
+            d = json.loads(f.read_text())
+            script = (d.get("fonts") or {}).get("needs_script")
+            R = resolve("tutorial", d["id"], "long-16x9")
+            if not script:
+                self.assertFalse([w for w in R.warnings if "script" in w], f"{d['id']} should not warn")
+                continue
+            self.assertEqual(R["caption"]["case"], "NATIVE", d["id"])
+            self.assertTrue(any(script in w and "no upper case" in w for w in R.warnings), (d["id"], R.warnings))
+            self.assertEqual(R["locale"]["whisper_model"], "large-v3", d["id"])
+            self.assertGreaterEqual(R.get("text.line_height"), 1.05, d["id"])
+
+    def test_new_formats_are_faster_than_long_form(self):
+        long_ = resolve("comedy", "en", "long-16x9").get("pacing.cuts_per_min")
+        for fmt in ("square-1x1", "vertical-4x5", "portrait-9x16"):
+            self.assertGreater(resolve("comedy", "en", fmt).get("pacing.cuts_per_min"), long_, fmt)
 
 class TestSpec(unittest.TestCase):
     def test_demo_timeline_matches_template_spec(self):

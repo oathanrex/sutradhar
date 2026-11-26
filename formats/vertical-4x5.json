@@ -1,0 +1,19 @@
+{
+  "id": "vertical-4x5",
+  "name": "Vertical feed post, 4:5",
+  "width": 1080,
+  "height": 1350,
+  "fps": 30,
+  "safe": {
+    "top_pct": 10,
+    "bottom_pct": 68,
+    "side_pct": 8,
+    "caption_size_px": 68,
+    "caption_size_mult": 1.18
+  },
+  "pacing_mult": 0.8,
+  "notes": [
+    "4:5 takes the most vertical space in a feed without being a Short: best for carousels and teasers.",
+    "Hooks land in 1 second here, faster than 16:9 and slower than 9:16."
+  ]
+}

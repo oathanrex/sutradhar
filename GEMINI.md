@@ -9,6 +9,7 @@ file is the routing table and the non-negotiables.
 3. `brand/rules.md` - dated rules; every visual decision must cite one
 4. `packs/<chosen>.json` - pace, shot mix, hook patterns, retention risks for this category
 5. `locales/<chosen>.json` - script, caption width, whisper model, font requirements
+   (`en · hi · hinglish · mr · ta · bn`; Indian scripts force caption case to NATIVE and demand a font fallback)
 6. `formats/<chosen>.json` - resolution, safe zones, pacing multiplier
 
 ## Which skill when
@@ -49,7 +50,7 @@ sutra evidence                                               # which packs have 
 sutra analytics pull --video <id> --duration <s>             # retention without a CSV export
 sutra loop <curve.csv> --timeline <file>                     # retention curve -> rule proposals
 sutra library index                                          # no licence, no entry
-make test                                                    # 55 tests, no network, no GPU
+make test                                                    # 57 tests, no network, no GPU
 make preview                                                 # render docs/demo.mp4 and gate it
 ```
 

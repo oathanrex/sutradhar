@@ -1,0 +1,31 @@
+{
+  "name": "sutradhar",
+  "version": "1.2.0",
+  "description": "One thread from research to retention: 8 skills that research, script, edit and gate video in code, in your own brand, for any creator category and any of six locales.",
+  "author": {
+    "name": "sutradhar contributors"
+  },
+  "repository": "https://github.com/<you>/sutradhar",
+  "license": "MIT",
+  "keywords": [
+    "video",
+    "editing",
+    "youtube",
+    "hyperframes",
+    "antigravity",
+    "retention",
+    "hinglish",
+    "tamil",
+    "bengali"
+  ],
+  "skills": [
+    "./.claude/skills/brand",
+    "./.claude/skills/plan",
+    "./.claude/skills/research",
+    "./.claude/skills/script",
+    "./.claude/skills/edit",
+    "./.claude/skills/gate",
+    "./.claude/skills/loop",
+    "./.claude/skills/shorts"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "sutradhar",
+  "owner": {
+    "name": "sutradhar contributors"
+  },
+  "description": "Video editing in code, verified: 10 category packs, 6 locales, 4 formats, 7 publish gates.",
+  "plugins": [
+    {
+      "name": "sutradhar",
+      "source": "./",
+      "description": "Research, script, edit and gate video in code. 240 validated pack x locale x format combinations.",
+      "category": "video",
+      "keywords": [
+        "video",
+        "editing",
+        "youtube",
+        "retention"
+      ]
+    }
+  ]
+}

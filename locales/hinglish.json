@@ -17,7 +17,12 @@
   },
   "fonts": {
     "needs_devanagari": true,
-    "suggested_free": ["Baloo Bhai 2", "Mukta", "Inter Tight (Latin fallback)"]
+    "suggested_free": [
+      "Baloo Bhai 2",
+      "Mukta",
+      "Inter Tight (Latin fallback)"
+    ],
+    "needs_script": "devanagari"
   },
   "notes": [
     "Captions must be written exactly as spoken: 'yaar ye kaam nahi karega' stays Roman, do not convert it to Devanagari.",

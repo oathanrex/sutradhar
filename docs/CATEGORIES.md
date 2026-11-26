@@ -31,23 +31,23 @@ Each pack also carries `retention_risks`, `hook_patterns`, `never`, a beat table
 
 ### Overlays
 
-**Locales** — `en` · `hi` · `hinglish`
+**Locales** — `en` · `hi` · `hinglish` · `mr` · `ta` · `bn` (full detail and fonts: [LOCALES.md](LOCALES.md))
 
-| | en | hi | hinglish |
-|---|---|---|---|
-| whisper model | small.en | **large-v3** | **large-v3** |
-| chars per caption line | 42 | 28 | 30 |
-| caps allowed | yes | **no — Devanagari has no case** | no |
-| line height | 0.92 | 1.08 | 1.06 |
-| width budget | 1.0× | 1.18× | 1.12× |
-| suggested free fonts | Inter Tight, Archivo Black | Baloo Bhai 2, Mukta | Baloo Bhai 2 + Latin fallback |
+| | en | hi | hinglish | mr | ta | bn |
+|---|---|---|---|---|---|---|
+| whisper model | small.en | large-v3 | large-v3 | large-v3 | large-v3 | large-v3 |
+| chars / caption line | 42 | 28 | 30 | 30 | 24 | 26 |
+| caps allowed | yes | no | no | no | no case | no case |
+| line height | 0.92 | 1.08 | 1.06 | 1.08 | 1.10 | 1.14 |
+| width budget | 1.0× | 1.18× | 1.12× | 1.16× | 1.32× | 1.28× |
 
 `hinglish` rule that matters: captions are written **exactly as spoken**. `yaar ye kaam nahi karega` stays Roman.
 Never transliterate, never translate a product name. Using `small.en` on Hindi audio produces confident garbage —
 that is why the locale owns the model name, not the script.
 
-**Formats** — `long-16x9` · `portrait-9x16`. Portrait multiplies pace ×0.7 (every shot 30% shorter), moves safe
-zones to 14% top / 62% bottom, and raises caption size ×1.25.
+**Formats** — `long-16x9` · `portrait-9x16` · `vertical-4x5` · `square-1x1`. The multiplier applies after every
+other layer merges, so a pack never learns it is being rendered vertically: portrait ×0.7 (every shot 30% shorter),
+4:5 ×0.8, 1:1 ×0.85, each with its own safe zones and caption size.
 
 ---
 
@@ -67,8 +67,8 @@ Pick yours, follow the row, ignore everything else for the first month.
 - **Ignore**: `rec` placeholders; if you have no footage, plan around screens and diagrams.
 - **Cadence**: 2 videos/week is realistic because the edit is 80% template.
 
-### 3. Hindi / Hinglish creator
-- **Start**: any pack, `--locale hi` or `hinglish`, then `make sync`.
+### 3. Hindi / Hinglish / Tamil / Bengali creator
+- **Start**: any pack, `--locale hi | hinglish | mr | ta | bn`, then `make sync`.
 - **Do now**: install a Devanagari font (Baloo Bhai 2 or Mukta), set the font stack with a Latin fallback,
   upgrade the whisper model to `large-v3`. `sutra doctor` checks the font for you.
 - **Why this is an advantage**: captions, line heights and transcription are wrong in almost every English-built

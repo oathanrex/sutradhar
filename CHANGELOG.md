@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.2.0 — 2026-11-26
+
+Reach: five Indian locales instead of two, four formats instead of two, and an install that does not start with
+`git clone` for people who already use Claude Code.
+
+**Added**
+- **Locales `ta` (Tamil), `bn` (Bengali), `mr` (Marathi).** Each one owns the whisper model, caption ceiling,
+  line height, caps policy, letter spacing and speed budget. Tamil gets 24 chars and line height 1.10 because it is
+  agglutinative and its ascenders/descenders clip; Bengali gets 26 and 1.14 for conjuncts; Marathi reuses the
+  Devanagari stack but tightens to 30. The matrix is now **240 combinations** (10 × 6 × 4).
+- **`fonts.needs_script`** replaces the Devanagari special case. `resolve()` now warns about a Latin-only brand font
+  for *any* script locale, and forces caption case to `NATIVE` for all of them.
+- **Formats `vertical-4x5` and `square-1x1`** with their own safe zones and pace multipliers (×0.8 and ×0.85).
+  `comedy` at 45 cuts/min becomes 52.9 in square and 64.3 in portrait without touching the pack.
+- **`docs/LOCALES.md`** — why a language is a config, the full comparison table, per-OS font install, and how to add
+  a locale in 15 minutes.
+- **`docs/QUICKSTART-hi.md`** — the whole quickstart in Hindi, including what actually breaks in Hindi/Hinglish.
+- **`.claude-plugin/plugin.json` + `marketplace.json`** so `sutra` installs as a Claude Code plugin marketplace,
+  not only as a clone. `pyproject.toml` already exposes the `sutra` console script.
+- `sutra doctor` reads the locale files and reports which script has no font installed, instead of assuming
+  Devanagari is the only case.
+
+**Tests**: 57 (was 55). The locale loop is discovered from `locales/*.json`, and every script-bearing locale is
+asserted to disable caps, demand a font fallback, and use `large-v3`.
+
 ## 1.1.0 — 2026-11-26
 
 The version that closes the hole from the v1.0 self-audit.

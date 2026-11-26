@@ -1,5 +1,5 @@
 """sutra doctor: say exactly what is missing and the command that fixes it."""
-import importlib.util, pathlib, platform, shutil, subprocess, sys
+import importlib.util, json, pathlib, platform, shutil, subprocess, sys
 from .util import ROOT, table, ffmpeg_exe
 
 
@@ -14,16 +14,44 @@ def _ver(cmd, args=("--version",)):
         return (r.stdout or r.stderr).strip().splitlines()[0][:48]
     except Exception: return "installed"
 
-def _has_devanagari():
-    if not shutil.which("fc-list"): return sys.platform.startswith("darwin") or sys.platform.startswith("win")
-    return bool(subprocess.run(["fc-list", ":lang=hi"], capture_output=True, text=True).stdout.strip())
+def _scripts_needed():
+    out = set()
+    for f in (ROOT / "locales").glob("*.json"):
+        try:
+            s = json.loads(f.read_text())
+        except Exception:
+            continue
+        sc = (s.get("fonts") or {}).get("needs_script")
+        if sc:
+            out.add(sc)
+    return sorted(out)
 
-def _devanagari_detail():
-    try:
-        out = subprocess.run(["fc-list", ":lang=hi", "family"], capture_output=True, text=True).stdout.strip()
-        return (out.splitlines()[0][:48] if out else "none found")
-    except Exception:
-        return "fc-list unavailable"
+_LANG = {"devanagari": "hi", "tamil": "ta", "bengali": "bn", "telugu": "te", "gujarati": "gu",
+         "kannada": "kn", "malayalam": "ml", "gurmukhi": "pa", "odia": "or", "arabic": "ar"}
+
+def _indic_found():
+    """Which of the scripts this repo ships locales for actually have a font installed."""
+    if not shutil.which("fc-list"):
+        return None                                  # macOS/Windows: cannot tell, do not guess
+    found = []
+    for sc in _scripts_needed():
+        code = _LANG.get(sc, sc[:2])
+        r = subprocess.run(["fc-list", f":lang={code}", "family"], capture_output=True, text=True)
+        if r.stdout.strip():
+            found.append(sc)
+    return found
+
+def _has_indic():
+    f = _indic_found()
+    return True if f is None else len(f) == len(_scripts_needed())
+
+def _indic_detail():
+    f = _indic_found()
+    if f is None:
+        return "cannot check here (no fc-list)"
+    if not f:
+        return "none found"
+    return ", ".join(f)[:48]
 
 CHECKS = [
     ("python", lambda: (sys.version.split()[0] >= "3.10"), sys.version.split()[0], "install Python 3.10+"),
@@ -44,8 +72,8 @@ CHECKS = [
      "found" if (ROOT / "brand" / "style.spec.json").exists() else "missing", "sutra spec extract"),
     ("library manifest", lambda: (ROOT / "library" / "manifest.json").exists(),
      "found" if (ROOT / "library" / "manifest.json").exists() else "missing", "sutra library index"),
-    ("devanagari font", _has_devanagari, _devanagari_detail(),
-     "for hi/hinglish: install Baloo Bhai 2 or Mukta from Google Fonts"),
+    ("indic fonts", _has_indic, _indic_detail(),
+     "install a font per script you publish in (Google Fonts: Baloo Bhai 2, Noto Sans Tamil/Bengali)"),
 ]
 
 def run():

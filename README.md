@@ -4,7 +4,7 @@ Edit video in code with any agent — Claude Code, Antigravity, Codex, Gemini CL
 for any creator category, with the numbers checked instead of vibes.</p>
 
 <p align="center">
-  <code>MIT</code> · <code>zero dependencies in the core</code> · <code>21 tests</code> · <code>10 categories × 3 locales × 2 formats</code>
+  <code>MIT</code> · <code>zero dependencies in the core</code> · <code>57 tests</code> · <code>10 categories × 6 locales × 4 formats = 240</code>
 </p>
 
 ---
@@ -25,14 +25,14 @@ sutradhar fixes those four, and nothing else. It is deliberately small: 8 skills
 | | other setups | sutradhar |
 |---|---|---|
 | The look | a prompt that says "minimal, dark, punchy" | `brand/design.json` + `brand/style.spec.json` — a render is **verified** against numbers |
-| Categories | one style, tuned for one channel | **10 category packs**, 3 locales, 2 formats — 60 combinations, all tested in CI |
+| Categories | one style, tuned for one channel | **10 category packs × 6 locales × 4 formats = 240 combinations**, all resolved in CI |
 | Pace | guessed per video | `cuts_per_min`, `avg_shot_len_s`, `max_hold_s` from the pack, checked by `sutra spec verify` |
 | Publish QA | "looks good to me" | **7 gates**: hook, pace, mobile legibility, licence, loudness/true peak, word coverage, flash |
 | Output | a promise | `sutra build` -> scrubbable shot sheet + HyperFrames composition + a content-hash receipt |
 | Retention | afterthought | `sutra loop` attributes every drop-off to a **shot kind** and proposes rule changes |
 | Rules | a growing document | dated rules with evidence; **rules that lose evidence get deleted** |
 | Dependencies | npm + python + a magic stack | core is **stdlib only**; ffmpeg/whisper are optional and named when missing |
-| Hindi / Hinglish | English model silently produces garbage | locale-aware: whisper `large-v3`, Devanagari line heights, caps disabled, char width budgeted |
+| Indian languages | English model silently produces garbage, Devanagari matras clip, Tamil words overflow | 5 Indian locales: `hi · hinglish · mr · ta · bn` — whisper `large-v3`, per-script line heights, caps disabled, width budgeted |
 
 ## Install
 
@@ -46,6 +46,9 @@ Using **Claude Code**: open the folder, it reads `CLAUDE.md`, say `build my bran
 Using **Antigravity / Gemini CLI**: `make sync` (mirrors `.claude/skills` → `.agents/skills`), tell it to read
 `AGENTS.md` first.
 
+As a **plugin** (Claude Code): `/plugin marketplace add <you>/sutradhar` then install `sutradhar` from it —
+the manifest lives in `.claude-plugin/`. As a **CLI**: `pipx install .` gives you `sutra` on PATH.
+
 The rendering engine is [HyperFrames](https://github.com/heygen-com/hyperframes) (Apache-2.0, free, HTML → MP4,
 `npx hyperframes`). This repo never installs it for you — it writes the project and the timeline HyperFrames
 renders. Install it from its own source and pin the version in `examples/demo-30s/project/package.json`.
@@ -57,7 +60,7 @@ make preview   # render docs/demo.mp4 and run the render-dependent gates on it
 make check     # brand + 10 packs + spec + demo timeline: all clear
 make spec      # measured numbers vs spec, PASS/FAIL per metric
 make gates     # hook PASS 1.30s · pace PASS · mobile PASS 20 chars 17.4:1 · legal PASS 4 assets · audio SKIP (no render)
-make matrix    # 60 pack x locale x format combinations resolved, 0 problems
+make matrix    # 240 pack x locale x format combinations resolved, 0 problems
 ```
 
 Everything above runs with no network and no ffmpeg. That is the point: **the thinking is testable without the
@@ -111,7 +114,9 @@ finish.
 | comedy | 45 | 2.2s | explaining the joke |
 | gaming | 38 | 3.0s | highlight with no stakes |
 
-Locales: `en`, `hi`, `hinglish`. Formats: `long-16x9`, `portrait-9x16`. See [docs/CATEGORIES.md](docs/CATEGORIES.md)
+Locales: `en · hi · hinglish · mr · ta · bn`. Formats: `long-16x9 · portrait-9x16 · vertical-4x5 · square-1x1`.
+Why a language is a config and not a translation: [docs/LOCALES.md](docs/LOCALES.md). Category plan:
+[docs/CATEGORIES.md](docs/CATEGORIES.md). Hindi quickstart: [docs/QUICKSTART-hi.md](docs/QUICKSTART-hi.md).
 for the full plan — including the six **creator profiles** and the four **maturity levels**.
 
 ## First video, end to end

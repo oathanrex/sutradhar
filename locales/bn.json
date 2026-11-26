@@ -1,0 +1,38 @@
+{
+  "id": "bn",
+  "name": "Bengali",
+  "whisper_lang": "bn",
+  "whisper_model": "large-v3",
+  "caption": {
+    "max_chars_per_line": 26,
+    "case": "NATIVE",
+    "words_per_min_speech": 115,
+    "punctuation_on_screen": true
+  },
+  "text": {
+    "expansion_vs_en": 1.28,
+    "letter_spacing_px": 0.5,
+    "line_height": 1.14
+  },
+  "fonts": {
+    "needs_script": "bengali",
+    "suggested_free": [
+      "Noto Sans Bengali",
+      "Hind Siliguri",
+      "Baloo Da 2",
+      "Mukta Mahee"
+    ],
+    "avoid": [
+      "Inter",
+      "Archivo Black"
+    ]
+  },
+  "notes": [
+    "Bengali has no upper case: caps are not available, so weight carries emphasis.",
+    "Conjuncts (যুক্তাক্ষর) make words wider and taller than their character count suggests. line_height must be at least 1.12 or the hasanta and upper matras collide.",
+    "Do not add letter spacing beyond 1px: it visually breaks conjunct clusters that belong together.",
+    "whisper large-v3 for Bengali; a small English model produces confident nonsense.",
+    "Digits are usually Latin numerals on screen, even when the language is Bengali.",
+    "Starting defaults, not measurements. Measure three videos in your niche before quoting these numbers."
+  ]
+}

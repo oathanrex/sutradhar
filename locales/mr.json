@@ -1,0 +1,38 @@
+{
+  "id": "mr",
+  "name": "Marathi (Devanagari)",
+  "whisper_lang": "mr",
+  "whisper_model": "large-v3",
+  "caption": {
+    "max_chars_per_line": 30,
+    "case": "NATIVE",
+    "words_per_min_speech": 118,
+    "punctuation_on_screen": true
+  },
+  "text": {
+    "expansion_vs_en": 1.16,
+    "letter_spacing_px": 1,
+    "line_height": 1.08
+  },
+  "fonts": {
+    "needs_script": "devanagari",
+    "suggested_free": [
+      "Baloo Bhai 2",
+      "Mukta",
+      "Tiro Devanagari Marathi",
+      "Noto Sans Devanagari"
+    ],
+    "avoid": [
+      "Inter",
+      "Archivo Black"
+    ]
+  },
+  "notes": [
+    "Same script as Hindi, so one Devanagari font stack serves hi, mr and hinglish.",
+    "Marathi words run longer than Hindi on average: 30 characters per line, not 34.",
+    "No upper case in Devanagari: emphasis comes from weight and colour, never caps.",
+    "Technical nouns stay in English (as most Marathi tech channels speak). Never translate a product name.",
+    "whisper large-v3 with language=mr; resolve(mr) already sets it.",
+    "Starting defaults, not measurements. Measure three videos in your niche before quoting these numbers."
+  ]
+}

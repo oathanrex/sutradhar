@@ -16,7 +16,13 @@
   },
   "fonts": {
     "needs_devanagari": false,
-    "suggested_free": ["Inter Tight", "Bricolage Grotesque", "Archivo Black", "JetBrains Mono"]
+    "suggested_free": [
+      "Inter Tight",
+      "Bricolage Grotesque",
+      "Archivo Black",
+      "JetBrains Mono"
+    ],
+    "needs_script": null
   },
   "notes": [
     "English caps are safe up to 3 words per card; beyond that use sentence case.",

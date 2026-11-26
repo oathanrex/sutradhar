@@ -1,0 +1,19 @@
+{
+  "id": "square-1x1",
+  "name": "Square feed post, 1:1",
+  "width": 1080,
+  "height": 1080,
+  "fps": 30,
+  "safe": {
+    "top_pct": 10,
+    "bottom_pct": 74,
+    "side_pct": 8,
+    "caption_size_px": 64,
+    "caption_size_mult": 1.1
+  },
+  "pacing_mult": 0.85,
+  "notes": [
+    "Feed posts are watched muted and scrolled: the text has to carry the whole story.",
+    "Cut 15% faster than long form and keep every line inside the middle 64% of the frame."
+  ]
+}

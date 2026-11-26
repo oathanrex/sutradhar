@@ -81,8 +81,11 @@ def resolve(pack_id=None, locale_id="en", format_id="long-16x9", brand_path=None
 
     loc = jload(LOCALES / f"{locale_id}.json") or die(f"unknown locale '{locale_id}'")
     sources["locale"] = locale_id
+    script = (loc.get("fonts") or {}).get("needs_script") or (
+        "devanagari" if (loc.get("fonts") or {}).get("needs_devanagari") else None)
     vals["locale"] = {"id": loc["id"], "name": loc["name"], "whisper_lang": loc["whisper_lang"],
-                      "whisper_model": loc["whisper_model"], "notes": loc.get("notes", [])}
+                      "whisper_model": loc["whisper_model"], "needs_script": script,
+                      "notes": loc.get("notes", [])}
     _merge(vals, {"text": {"letter_spacing_px": loc["text"]["letter_spacing_px"],
                            "line_height": loc["text"]["line_height"]}}, f"locale:{locale_id}", prov)
     if "caption" in loc:
@@ -106,15 +109,17 @@ def resolve(pack_id=None, locale_id="en", format_id="long-16x9", brand_path=None
     body, bg = vals["font"]["body"], vals["colour"]["background"]
     if contrast(bg, vals["colour"]["text"]) < 4.5:
         warnings.append(f"text/background contrast {contrast(bg, vals['colour']['text'])}:1 is below 4.5:1")
-    lat = {"inter tight", "inter", "archivo black", "bricolage grotesque", "jetbrains mono", "helvetica"}
-    if loc.get("fonts", {}).get("needs_devanagari") and str(body).lower() in lat:
-        warnings.append(f"locale {locale_id} needs Devanagari but the brand font is Latin-only ({body}). "
+    lat = {"inter tight", "inter", "archivo black", "bricolage grotesque", "jetbrains mono", "helvetica",
+           "arial", "roboto", "montserrat", "poppins"}
+    if script and str(body).lower() in lat:
+        warnings.append(f"locale {locale_id} needs {script} script but the brand font is Latin-only ({body}). "
                         f"Add a fallback: {', '.join(loc['fonts'].get('suggested_free', []))}")
     brand_case = (brand or {}).get("caption_case")
     if brand_case:
         vals["caption"]["case"] = brand_case; prov["caption.case"] = "brand"
-    if loc.get("fonts", {}).get("needs_devanagari") and vals["caption"].get("case") == "UPPER":
-        warnings.append(f"locale {locale_id}: Devanagari has no upper case. Caption case forced UPPER -> NATIVE")
+    if script and vals["caption"].get("case") == "UPPER":
+        warnings.append(f"locale {locale_id}: {script} script has no upper case. "
+                        f"Caption case forced UPPER -> NATIVE")
         vals["caption"]["case"] = "NATIVE"; prov["caption.case"] = f"locale:{locale_id}"
     if vals["pacing"]["max_hold_s"] <= vals["pacing"]["avg_shot_len_s"]:
         warnings.append("max_hold_s <= avg_shot_len_s: the pace target is impossible to hit")

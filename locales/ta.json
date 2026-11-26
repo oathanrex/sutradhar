@@ -1,0 +1,39 @@
+{
+  "id": "ta",
+  "name": "Tamil",
+  "whisper_lang": "ta",
+  "whisper_model": "large-v3",
+  "caption": {
+    "max_chars_per_line": 24,
+    "case": "NATIVE",
+    "words_per_min_speech": 110,
+    "punctuation_on_screen": true
+  },
+  "text": {
+    "expansion_vs_en": 1.32,
+    "letter_spacing_px": 0.5,
+    "line_height": 1.1
+  },
+  "fonts": {
+    "needs_script": "tamil",
+    "suggested_free": [
+      "Noto Sans Tamil",
+      "Mukta Malar",
+      "Catamaran",
+      "Hind Madurai"
+    ],
+    "avoid": [
+      "Inter",
+      "Archivo Black"
+    ]
+  },
+  "notes": [
+    "Tamil has no upper case: never use a caps style, use weight 700-800 instead.",
+    "Tamil is agglutinative, so single words are long. Break lines at word boundaries, never mid-word, and budget 1.32x the English character count.",
+    "Ascenders and descenders sit on both sides of the line: line_height below 1.08 clips them.",
+    "Never stretch Tamil glyphs horizontally to fill a frame - the letterforms distort and readers notice immediately.",
+    "whisper small.* hallucinates on Tamil. large-v3 only.",
+    "On-screen digits stay in Latin numerals; that is what the audience reads.",
+    "Starting defaults, not measurements. Measure three videos in your niche before quoting these numbers."
+  ]
+}
