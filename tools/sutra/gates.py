@@ -56,11 +56,12 @@ def legal(tl, library_dir=None, root=None):
     man = jload(root / "library" / "manifest.json")
     if man is None:
         return _res("FAIL", "library/manifest.json is missing: no asset can be proven licensed", ["run: sutra library index"])
-    by_path = {e.get("path"): e for e in man.get("assets", [])}
+    norm = lambda x: str(x or "").replace("\\", "/").lstrip("./")
+    by_path = {norm(e.get("path")): e for e in man.get("assets", [])}
     off, seen = [], set()
     for s in tl["shots"]:
         for m in s.get("media") or []:
-            e = by_path.get(m) or next((v for k, v in by_path.items() if k and str(m).endswith(k.split("/")[-1])), None)
+            e = by_path.get(norm(m)) or next((v for k, v in by_path.items() if k and norm(m).endswith(k.split("/")[-1])), None)
             if not e:
                 if m not in seen: off.append(f"{m}: not in the library manifest - record it, then run sutra library index")
                 seen.add(m)

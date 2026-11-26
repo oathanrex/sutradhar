@@ -31,7 +31,7 @@ def index(root=".", write=True):
     lic = _licences(root); added, unlicensed = 0, []
     for p in sorted((root / "library").rglob("*")):
         if not p.is_file() or p.suffix.lower() not in EXT: continue
-        rel = str(p.relative_to(root))
+        rel = p.relative_to(root).as_posix()   # posix on every OS: manifest keys must match timeline paths
         if rel in known: continue
         e = {"path": rel, "kind": "audio" if p.suffix.lower() in {".wav", ".mp3", ".m4a", ".aiff", ".flac"} else "visual",
              "bytes": p.stat().st_size, "sha1": hashlib.sha1(p.read_bytes()).hexdigest()[:12],

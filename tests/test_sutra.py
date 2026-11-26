@@ -130,3 +130,26 @@ class TestLibrary(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class TestCrossPlatform(unittest.TestCase):
+    """Windows is the majority of this audience. A manifest written there must still match a timeline."""
+
+    def test_manifest_written_on_windows_still_matches(self):
+        tmp = pathlib.Path(tempfile.mkdtemp())
+        (tmp / "library" / "broll").mkdir(parents=True)
+        (tmp / "library" / "broll" / "desk.mp4").write_bytes(b"x")
+        added, total, unlic = index(tmp)
+        self.assertEqual(added, 1)
+        man = json.loads((tmp / "library" / "manifest.json").read_text())
+        path = man["assets"][0]["path"]
+        self.assertNotIn("\\", path, "manifest paths must use forward slashes on every OS")
+        self.assertEqual(path, "library/broll/desk.mp4")
+        # a manifest authored on Windows (backslashes) must still satisfy the legal gate
+        man["assets"][0]["path"] = "library\\broll\\desk.mp4"
+        man["assets"][0]["license"] = "original"
+        man["assets"][0]["source"] = "own camera"
+        (tmp / "library" / "manifest.json").write_text(json.dumps(man))
+        tl = {"version": "1.0", "video": "t", "format": "long-16x9", "duration_s": 4.0,
+              "shots": [{"start_s": 0, "end_s": 4, "kind": "full", "media": ["broll/desk.mp4"]}]}
+        self.assertEqual(gates.legal(tl, root=tmp)["status"], "PASS")
