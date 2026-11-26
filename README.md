@@ -112,6 +112,19 @@ finish.
 Locales: `en`, `hi`, `hinglish`. Formats: `long-16x9`, `portrait-9x16`. See [docs/CATEGORIES.md](docs/CATEGORIES.md)
 for the full plan — including the six **creator profiles** and the four **maturity levels**.
 
+## First video, end to end
+
+`docs/ANTIGRAVITY.md` is the full Antigravity runbook (setup, prompt patterns, free-tier reality, troubleshooting).
+The sequence is always the same:
+
+```
+brand (once) -> plan -> research -> script -> timeline -> storyboard STOP -> render -> 5 gates STOP -> publish
+                                                                                       |
+                                              7 days later: retention curve -> loop -> lock 1 rule, delete 1
+```
+
+Two stop signs. Everything else the agent should finish without asking you.
+
 ## Honest limits
 
 - It does not make you funny, right, or worth watching. It makes your taste **repeatable and measurable**.
