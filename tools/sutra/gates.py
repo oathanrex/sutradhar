@@ -62,7 +62,7 @@ def legal(tl, library_dir=None, root=None):
         for m in s.get("media") or []:
             e = by_path.get(m) or next((v for k, v in by_path.items() if k and str(m).endswith(k.split("/")[-1])), None)
             if not e:
-                if m not in seen: off.append(f"{m}: not in the library manifest - record it and add a licence row")
+                if m not in seen: off.append(f"{m}: not in the library manifest - record it, then run sutra library index")
                 seen.add(m)
             elif not e.get("license") or not e.get("source"):
                 off.append(f"{m}: licence/source missing")
