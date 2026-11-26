@@ -19,6 +19,8 @@ jobs:
         run: "! grep -rn '^import \\(requests\\|numpy\\|PIL\\|jsonschema\\|yaml\\)' tools/sutra"
       - name: tests (unit + CLI surface)
         shell: bash
+        env:
+          PYTHONUTF8: "1"
         run: PYTHONPATH=tools python -m unittest discover -s tests -v
       - name: everything validates
         shell: bash

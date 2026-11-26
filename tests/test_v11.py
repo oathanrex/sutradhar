@@ -238,9 +238,9 @@ class TestCli(unittest.TestCase):
     """The CLI surface, end to end, in a subprocess. Exit codes are the contract."""
 
     def run_cli(self, *args, cwd=ROOT):
-        env = {**os.environ, "PYTHONPATH": str(ROOT / "tools")}
+        env = {**os.environ, "PYTHONPATH": str(ROOT / "tools"), "PYTHONUTF8": "1"}
         return subprocess.run([sys.executable, "-m", "sutra", *args], cwd=cwd, env=env,
-                              capture_output=True, text=True)
+                              capture_output=True, text=True, encoding="utf-8")
 
     def test_version(self):
         r = self.run_cli("--version")

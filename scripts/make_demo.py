@@ -115,6 +115,7 @@ def main(timeline_path, out_path):
     wav = tmp / "a.wav"
     audio_wav(shots, dur, wav)
 
+    pathlib.Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     frames = int(round(dur * FPS))
     ff = ffmpeg_exe()
     cmd = [ff, "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
